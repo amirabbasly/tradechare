@@ -1,30 +1,28 @@
-import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import About from "@/components/About";
 import { Coverage, Process, ServicesGrid } from "@/components/Services";
-import { AiSection, Pricing, Rates } from "@/components/Trade";
+import { AiSection, Rates } from "@/components/Trade";
 import { CtaBanner, Faq, Testimonials, Trust } from "@/components/Closing";
-import Footer from "@/components/Footer";
-import Widgets from "@/components/Widgets";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "تریدچاره | شرکت بازرگانی و ترخیص کالا با ۲۰ سال سابقه",
+};
 
 export default function Home() {
   return (
-    <>
-      <Navbar />
-      <main>
-        <Hero />
-        <ServicesGrid />
-        <AiSection />
-        <Rates />
-        <Pricing />
-        <Process />
-        <Coverage />
-        <Trust />
-        <Testimonials />
-        <Faq />
-        <CtaBanner />
-      </main>
-      <Footer />
-      <Widgets />
-    </>
+    <main>
+      <Hero />
+      <About />
+      <ServicesGrid />
+      <AiSection />
+      <Rates />
+      <Process />
+      <Coverage />
+      <Trust />
+      <Testimonials />
+      <Faq />
+      <CtaBanner />
+    </main>
   );
 }

@@ -89,10 +89,10 @@ export default function Footer() {
               <ul className="mt-4 flex flex-col gap-1">
                 {SERVICES.slice(0, 6).map((s) => (
                   <li key={s.title}>
-                    <button onClick={openContact} className="group flex w-full items-center gap-2 rounded-xl px-2 py-2 text-start text-[13.5px] font-bold text-slate-600 transition hover:bg-brand-50 hover:text-brand-700">
+                    <a href="/services" className="group flex w-full items-center gap-2 rounded-xl px-2 py-2 text-start text-[13.5px] font-bold text-slate-600 transition hover:bg-brand-50 hover:text-brand-700">
                       <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-brand-300 transition group-hover:bg-brand-600" />
                       {s.title}
-                    </button>
+                    </a>
                   </li>
                 ))}
               </ul>

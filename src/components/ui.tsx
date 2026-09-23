@@ -408,16 +408,10 @@ export function SectionHead({
 
 export function Logo({ light = false }: { light?: boolean }) {
   return (
-    <a href="#top" className="flex items-center gap-3">
-      <span className="relative grid h-11 w-11 place-items-center">
-        <span className="absolute inset-0 rounded-2xl bg-gradient-to-br from-brand-400 via-brand-600 to-brand-800 shadow-soft" />
-        <span className="absolute inset-0 rounded-2xl ring-1 ring-white/40 ring-inset" />
-        <svg viewBox="0 0 24 24" className="relative h-6 w-6 text-white" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-          <path d="M3 17h18l-2 4H5l-2-4Z" />
-          <path d="M6 17V9h5V7h4v2h3v8" />
-          <path d="M12 9V5" />
-        </svg>
-        <span className="absolute -top-1 -left-1 h-3.5 w-3.5 rounded-full bg-cyan-300 ring-2 ring-white" />
+    <a href="/" className="flex items-center gap-3">
+      <span className="relative block h-12 w-12 shrink-0 overflow-hidden rounded-2xl bg-white shadow-soft ring-1 ring-brand-100">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/images/logo.png" alt="لوگوی تریدچاره" className="h-full w-full object-cover" />
       </span>
       <span className="flex flex-col leading-tight">
         <span className={`text-[22px] font-black tracking-tight ${light ? "text-white" : "text-ink-900"}`}>

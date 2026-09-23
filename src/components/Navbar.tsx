@@ -79,7 +79,7 @@ export default function Navbar() {
 
           <div className="hidden items-center gap-3 lg:flex">
             <a
-              href="#rates"
+              href="/#rates"
               className="flex items-center gap-2 rounded-full border border-brand-200 bg-white px-4 py-2.5 text-[13px] font-black text-brand-700 shadow-sm transition hover:border-brand-300 hover:shadow-card"
             >
               <I name="trendUp" className="h-4 w-4" />

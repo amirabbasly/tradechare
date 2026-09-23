@@ -46,6 +46,16 @@ export function ServicesGrid() {
           ))}
         </div>
 
+        <Reveal delay={60} className="mt-8 text-center">
+          <a
+            href="/services"
+            className="inline-flex items-center gap-2 rounded-2xl border-2 border-brand-200 bg-white px-8 py-3.5 text-[15px] font-black text-brand-700 shadow-sm transition hover:border-brand-500 hover:bg-brand-50 hover:shadow-card"
+          >
+            مشاهده جزئیات همه خدمات
+            <I name="arrow" className="h-4 w-4" />
+          </a>
+        </Reveal>
+
         {/* wide banner */}
         <Reveal delay={100} className="mt-8">
           <div className="relative overflow-hidden rounded-[32px] shadow-soft">

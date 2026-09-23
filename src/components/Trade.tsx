@@ -1,7 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { FEES, PLANS, RATES, faToman, type Rate } from "@/lib/data";
+import { useState } from "react";
+import Image from "next/image";
+import { faToman } from "@/lib/data";
+import { formatUpdateTime, useRates } from "@/lib/useRates";
+import type { NormItem } from "@/lib/upstream";
 import { I, Reveal, SectionHead, useUI } from "./ui";
 
 /* ================= AI section ================= */
@@ -33,22 +36,22 @@ function AiDemo() {
   return (
     <div className="glass-dark overflow-hidden rounded-[30px] border border-white/15 shadow-soft">
       <div className="flex items-center gap-3 border-b border-white/10 px-5 py-4">
-        <span className="relative grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-cyan-400 to-brand-500 shadow-glow">
+        <span className="relative grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-cyan-400 to-brand-500 shadow-glow">
           <I name="bot" className="h-6 w-6 text-white" />
           <span className="absolute -right-1 -bottom-1 h-3.5 w-3.5 rounded-full bg-green-400 ring-2 ring-brand-950" />
         </span>
-        <div className="leading-tight">
-          <p className="text-[15px] font-black text-white">چاره‌بات — مغز متفکر تجارت شما</p>
+        <div className="min-w-0 leading-tight">
+          <p className="truncate text-[14px] font-black text-white sm:text-[15px]">چاره‌بات — مغز متفکر تجارت شما</p>
           <p className="mt-0.5 flex items-center gap-1.5 text-[12px] font-bold text-green-300">
             <span className="h-1.5 w-1.5 animate-live rounded-full bg-green-400" /> آنلاین و آماده پاسخ‌گویی
           </p>
         </div>
-        <span className="mr-auto hidden rounded-full bg-white/10 px-3 py-1 text-[11px] font-black text-cyan-200 sm:block">
+        <span className="mr-auto hidden shrink-0 rounded-full bg-white/10 px-3 py-1 text-[11px] font-black text-cyan-200 sm:block">
           نسخه ۴.۲
         </span>
       </div>
 
-      <div className="flex flex-col gap-3 p-5">
+      <div className="flex flex-col gap-3 p-4 sm:p-5">
         <div className="flex flex-wrap gap-2">
           {AI_DEMOS.map((d) => (
             <button
@@ -57,7 +60,7 @@ function AiDemo() {
                 setActive(d);
                 setKey((k) => k + 1);
               }}
-              className={`rounded-full px-4 py-2 text-[12.5px] font-black transition ${
+              className={`rounded-full px-3.5 py-2 text-[12px] font-black transition sm:px-4 sm:text-[12.5px] ${
                 active.id === d.id
                   ? "bg-gradient-to-l from-cyan-400 to-brand-500 text-white shadow-glow"
                   : "border border-white/15 bg-white/5 text-sky-100 hover:bg-white/10"
@@ -69,19 +72,19 @@ function AiDemo() {
         </div>
 
         <div key={key} className="flex flex-col gap-3">
-          <div className="animate-slide-up self-start rounded-2xl rounded-tr-md bg-gradient-to-l from-brand-500 to-brand-600 px-4 py-3 text-[13.5px] leading-7 font-bold text-white shadow-lg">
+          <div className="animate-slide-up self-start rounded-2xl rounded-tr-md bg-gradient-to-l from-brand-500 to-brand-600 px-4 py-3 text-[13px] leading-7 font-bold text-white shadow-lg sm:text-[13.5px]">
             {active.q}
           </div>
-          <div className="animate-slide-up flex items-start gap-2.5 self-stretch rounded-2xl rounded-tl-md border border-white/10 bg-white/10 px-4 py-3 text-[13.5px] leading-7 font-medium text-sky-50 [animation-delay:150ms]">
+          <div className="animate-slide-up flex items-start gap-2.5 self-stretch rounded-2xl rounded-tl-md border border-white/10 bg-white/10 px-4 py-3 text-[13px] leading-7 font-medium text-sky-50 [animation-delay:150ms] sm:text-[13.5px]">
             <I name="spark" className="mt-1 h-4 w-4 shrink-0 text-cyan-300" />
             {active.a}
           </div>
         </div>
 
-        <div className="mt-1 flex items-center gap-2 rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-[13px] font-bold text-sky-200/60">
-          <I name="chat" className="h-4 w-4" />
-          سؤال بازرگانی خود را بپرسید…
-          <span className="mr-auto grid h-8 w-8 place-items-center rounded-xl bg-gradient-to-br from-cyan-400 to-brand-500 text-white">
+        <div className="mt-1 flex items-center gap-2 rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-[12.5px] font-bold text-sky-200/60 sm:text-[13px]">
+          <I name="chat" className="h-4 w-4 shrink-0" />
+          <span className="truncate">سؤال بازرگانی خود را بپرسید…</span>
+          <span className="mr-auto grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-cyan-400 to-brand-500 text-white">
             <I name="send" className="h-4 w-4 -scale-x-100" />
           </span>
         </div>
@@ -117,7 +120,7 @@ export function AiSection() {
                   با <span className="text-gradient-light">چاره‌بات</span>، مثل یک هلدینگ تجارت کنید
                 </>
               }
-              desc="اولین دستیار هوش مصنوعی فارسی‌زبان حوزه گمرک و تجارت؛ آموزش‌دیده روی ۱۲ سال پرونده واقعی ترخیص، بخشنامه‌ها و تعرفه‌های گمرکی."
+              desc="اولین دستیار هوش مصنوعی فارسی‌زبان حوزه گمرک و تجارت؛ آموزش‌دیده روی ۲۰ سال پرونده واقعی ترخیص، بخشنامه‌ها و تعرفه‌های گمرکی."
             />
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
               {feats.map((f, i) => (
@@ -135,15 +138,20 @@ export function AiSection() {
             <Reveal delay={200}>
               <button
                 onClick={() => setChatOpen(true)}
-                className="btn-shine mt-7 flex items-center gap-2.5 rounded-2xl bg-gradient-to-l from-cyan-400 to-brand-500 px-8 py-4 text-[15px] font-black text-white shadow-glow transition hover:brightness-110"
+                className="btn-shine mt-7 flex w-full items-center justify-center gap-2.5 rounded-2xl bg-gradient-to-l from-cyan-400 to-brand-500 px-8 py-4 text-[15px] font-black text-white shadow-glow transition hover:brightness-110 sm:w-auto"
               >
                 <I name="chat" className="h-5 w-5" />
                 شروع گفت‌وگوی رایگان با چاره‌بات
               </button>
             </Reveal>
           </div>
-          <Reveal delay={150}>
-            <AiDemo />
+          <Reveal delay={150} className="relative">
+            <div className="animate-floaty absolute -top-8 -left-2 z-10 w-28 rotate-[-6deg] overflow-hidden rounded-2xl border-4 border-white/20 shadow-glow sm:-left-5 sm:w-36">
+              <Image src="/images/ai-brain.png" alt="هوش مصنوعی چاره‌بات" width={288} height={288} className="h-auto w-full object-cover" loading="lazy" />
+            </div>
+            <div className="pt-6 sm:pt-4">
+              <AiDemo />
+            </div>
           </Reveal>
         </div>
       </div>
@@ -151,73 +159,69 @@ export function AiSection() {
   );
 }
 
-/* ================= Rates ================= */
+/* ================= Live rates ================= */
 
-function Spark({ data, up }: { data: readonly number[]; up: boolean }) {
-  const pts = useMemo(() => {
-    const min = Math.min(...data);
-    const max = Math.max(...data);
-    const r = max - min || 1;
-    return data
-      .map((v, i) => `${(i / (data.length - 1)) * 96},${30 - ((v - min) / r) * 26}`)
-      .join(" ");
-  }, [data]);
+function LiveRow({ item }: { item: NormItem }) {
   return (
-    <svg viewBox="0 0 96 32" className="h-8 w-24" aria-hidden="true">
-      <polyline points={pts} fill="none" stroke={up ? "#16a34a" : "#ef4444"} strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function Row({ r }: { r: Rate }) {
-  const up = r.change >= 0;
-  return (
-    <div className="grid grid-cols-[1fr_auto] items-center gap-3 border-b border-brand-50 px-5 py-4 transition last:border-0 hover:bg-brand-50/60 sm:grid-cols-[1.3fr_1fr_1fr_0.8fr_auto] sm:gap-4">
-      <div className="flex items-center gap-3">
-        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-brand-50 text-2xl">{r.flag}</span>
-        <div className="leading-tight">
-          <p className="text-[14px] font-black text-ink-900">{r.name}</p>
-          <p className="mt-0.5 text-[11px] font-bold text-slate-400" dir="ltr">{r.code}/IRR</p>
-        </div>
+    <div className="flex items-center gap-3 border-b border-brand-50 px-4 py-3.5 transition last:border-0 hover:bg-brand-50/60 sm:px-5">
+      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-brand-50 text-xl sm:h-11 sm:w-11 sm:text-2xl">
+        {item.flag}
+      </span>
+      <div className="min-w-0 flex-1 leading-tight">
+        <p className="truncate text-[13px] font-black text-ink-900 sm:text-[14px]">{item.name}</p>
+        <p className="mt-0.5 text-[11px] font-bold text-slate-400" dir="ltr">{item.code}/IRR</p>
       </div>
-      <div className="text-left sm:text-right">
-        <p className="text-[11px] font-bold text-slate-400">خرید</p>
-        <p className="text-[15px] font-black text-ink-900 tabular-nums">{r.buy.toLocaleString("fa-IR")}</p>
-      </div>
-      <div className="hidden text-right sm:block">
-        <p className="text-[11px] font-bold text-slate-400">فروش</p>
-        <p className="text-[15px] font-black text-ink-900 tabular-nums">{r.sell.toLocaleString("fa-IR")}</p>
-      </div>
-      <div className="hidden sm:block">
-        <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[12px] font-black tabular-nums ${up ? "bg-green-50 text-green-600" : "bg-red-50 text-red-500"}`}>
-          <I name={up ? "trendUp" : "trendDown"} className="h-3.5 w-3.5" />
-          {up ? "+" : "−"}{Math.abs(r.change).toLocaleString("fa-IR")}%
-        </span>
-      </div>
-      <div className="hidden md:block">
-        <Spark data={r.spark} up={up} />
+      <div className="shrink-0 text-left">
+        <p className="text-[14px] font-black whitespace-nowrap text-ink-900 tabular-nums sm:text-[16px]">
+          {item.toman.toLocaleString("fa-IR")}
+        </p>
+        <p className="text-[10.5px] font-bold text-slate-400">تومان</p>
       </div>
     </div>
   );
 }
 
 function Converter() {
+  const { items, live } = useRates("arz");
   const [amount, setAmount] = useState("10000");
   const [code, setCode] = useState("USD");
-  const rate = RATES.find((r) => r.code === code) ?? RATES[0];
-  const result = (parseFloat(amount.replace(/[^0-9.]/g, "")) || 0) * rate.sell;
+  const [dir, setDir] = useState<"toToman" | "fromToman">("toToman");
+  const cur = items.find((i) => i.code === code) ?? items[0];
+  const num = parseFloat(amount.replace(/[^0-9.]/g, "")) || 0;
+  const result = dir === "toToman" ? num * cur.toman : cur.toman > 0 ? num / cur.toman : 0;
+
   return (
-    <div className="relative overflow-hidden rounded-[28px] bg-gradient-to-b from-brand-700 via-brand-600 to-brand-800 p-6 text-white shadow-soft">
+    <div className="relative flex h-full flex-col overflow-hidden rounded-[28px] bg-gradient-to-b from-brand-700 via-brand-600 to-brand-800 p-6 text-white shadow-soft">
       <div className="bg-grid-white absolute inset-0 opacity-50" />
       <div className="animate-drift absolute -top-20 -left-20 h-56 w-56 rounded-full bg-cyan-300/30 blur-3xl" />
-      <div className="relative">
+      <div className="relative flex h-full flex-col">
         <h3 className="flex items-center gap-2 text-[17px] font-black">
           <I name="calc" className="h-5 w-5 text-cyan-300" />
           مبدل ارز به تومان
         </h3>
-        <p className="mt-1 text-[12.5px] font-bold text-sky-200">محاسبه لحظه‌ای بر اساس نرخ فروش تابلو</p>
+        <p className="mt-1 flex items-center gap-1.5 text-[12.5px] font-bold text-sky-200">
+          <span className={`h-1.5 w-1.5 rounded-full ${live ? "animate-live bg-green-300" : "bg-amber-300"}`} />
+          {live ? "محاسبه با نرخ زنده بازار" : "محاسبه با آخرین نرخ ثبت‌شده"}
+        </p>
 
-        <label className="mt-5 block text-[13px] font-black text-sky-100">مبلغ ارز</label>
+        <div className="mt-5 grid grid-cols-2 gap-2 rounded-2xl bg-black/25 p-1.5">
+          <button
+            onClick={() => setDir("toToman")}
+            className={`rounded-xl px-3 py-2.5 text-[13px] font-black transition ${dir === "toToman" ? "bg-white text-brand-800 shadow" : "text-sky-200 hover:bg-white/10"}`}
+          >
+            ارز ← تومان
+          </button>
+          <button
+            onClick={() => setDir("fromToman")}
+            className={`rounded-xl px-3 py-2.5 text-[13px] font-black transition ${dir === "fromToman" ? "bg-white text-brand-800 shadow" : "text-sky-200 hover:bg-white/10"}`}
+          >
+            تومان ← ارز
+          </button>
+        </div>
+
+        <label className="mt-4 block text-[13px] font-black text-sky-100">
+          {dir === "toToman" ? `مبلغ (${cur.name})` : "مبلغ (تومان)"}
+        </label>
         <input
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
@@ -228,170 +232,130 @@ function Converter() {
         />
 
         <label className="mt-4 block text-[13px] font-black text-sky-100">انتخاب ارز</label>
-        <div className="mt-2 grid grid-cols-4 gap-2">
-          {RATES.slice(0, 8).map((r) => (
-            <button
-              key={r.code}
-              onClick={() => setCode(r.code)}
-              className={`flex flex-col items-center gap-0.5 rounded-2xl border px-1 py-2.5 text-[11px] font-black transition ${
-                code === r.code
-                  ? "border-cyan-300 bg-white text-brand-800 shadow-glow"
-                  : "border-white/15 bg-white/5 text-white hover:bg-white/15"
-              }`}
-            >
-              <span className="text-lg leading-none">{r.flag}</span>
-              <span dir="ltr">{r.code}</span>
-            </button>
-          ))}
+        <div className="relative mt-2">
+          <select
+            value={cur.code}
+            onChange={(e) => setCode(e.target.value)}
+            className="w-full appearance-none rounded-2xl border border-white/20 bg-white/10 px-4 py-3.5 text-[14px] font-black text-white backdrop-blur outline-none focus:border-cyan-300 [&>option]:text-slate-800"
+          >
+            {items.map((r) => (
+              <option key={`${r.code}-${r.name}`} value={r.code}>
+                {r.flag} {r.name}
+              </option>
+            ))}
+          </select>
+          <I name="down" className="pointer-events-none absolute top-1/2 left-4 h-4 w-4 -translate-y-1/2 text-sky-200" />
         </div>
 
         <div className="mt-5 rounded-2xl bg-black/25 p-4 backdrop-blur">
-          <p className="text-[12px] font-bold text-sky-200">معادل تومانی</p>
-          <p className="mt-1 text-[24px] font-black text-white tabular-nums">
-            {result > 0 ? faToman(Math.round(result)) : "—"}
+          <p className="text-[12px] font-bold text-sky-200">نتیجه تبدیل</p>
+          <p className="mt-1 text-[22px] leading-9 font-black break-words text-white tabular-nums">
+            {result > 0
+              ? dir === "toToman"
+                ? faToman(Math.round(result))
+                : `${result.toLocaleString("fa-IR", { maximumFractionDigits: 2 })} ${cur.name}`
+              : "—"}
           </p>
           <p className="mt-1 text-[11px] font-bold text-sky-200/70">
-            نرخ {rate.name}: {rate.sell.toLocaleString("fa-IR")} تومان
+            نرخ {cur.name}: {cur.toman.toLocaleString("fa-IR")} تومان
           </p>
         </div>
+
+        <a
+          href="/calculator"
+          className="mt-4 flex items-center justify-center gap-2 rounded-2xl border border-white/25 bg-white/10 px-4 py-3 text-[13.5px] font-black text-white backdrop-blur transition hover:bg-white/20"
+        >
+          <I name="calc" className="h-4.5 w-4.5" />
+          ماشین‌حساب کامل ارز و حقوق گمرکی
+        </a>
       </div>
     </div>
   );
 }
 
 export function Rates() {
+  const [tab, setTab] = useState<"arz" | "tala">("arz");
+  const arz = useRates("arz");
+  const tala = useRates("tala");
+  const active = tab === "arz" ? arz : tala;
+
   return (
     <section id="rates" className="relative scroll-mt-28 bg-gradient-to-b from-white via-brand-50/60 to-white py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <SectionHead
-          eyebrow="تابلو لحظه‌ای ارز"
+          eyebrow="تابلو لحظه‌ای بازار"
           title={
             <>
-              نرخ ارزها، <span className="text-gradient">شفاف و به‌روز</span>
+              نرخ ارز و طلا، <span className="text-gradient">مستقیم از بازار</span>
             </>
           }
-          desc="نرخ‌های خرید و فروش به‌روزرسانی می‌شوند تا همیشه با عدد واقعی تصمیم بگیرید. (مقادیر این پیش‌نمایش نمایشی است)"
+          desc="نرخ‌ها به‌صورت خودکار از بازار دریافت و هر ۵ دقیقه تازه‌سازی می‌شوند تا همیشه با عدد واقعی تصمیم بگیرید."
         />
-        <div className="mt-12 grid gap-6 lg:grid-cols-[1.5fr_1fr]">
-          <Reveal>
+
+        <Reveal delay={80}>
+          <div className="mt-8 flex flex-col items-center justify-between gap-4 sm:flex-row">
+            <div className="flex w-full gap-2 rounded-3xl border border-brand-100 bg-white p-1.5 shadow-sm sm:w-auto">
+              <button
+                onClick={() => setTab("arz")}
+                className={`flex flex-1 items-center justify-center gap-2 rounded-2xl px-6 py-2.5 text-[14px] font-black transition sm:flex-none ${
+                  tab === "arz" ? "bg-gradient-to-l from-brand-700 to-brand-500 text-white shadow-soft" : "text-slate-500 hover:bg-brand-50"
+                }`}
+              >
+                💱 ارزها
+                <span className={`rounded-full px-2 py-0.5 text-[11px] ${tab === "arz" ? "bg-white/25" : "bg-brand-50 text-brand-700"}`}>
+                  {arz.items.length.toLocaleString("fa-IR")}
+                </span>
+              </button>
+              <button
+                onClick={() => setTab("tala")}
+                className={`flex flex-1 items-center justify-center gap-2 rounded-2xl px-6 py-2.5 text-[14px] font-black transition sm:flex-none ${
+                  tab === "tala" ? "bg-gradient-to-l from-amber-500 to-orange-500 text-white shadow-soft" : "text-slate-500 hover:bg-brand-50"
+                }`}
+              >
+                ✨ طلا و سکه
+                <span className={`rounded-full px-2 py-0.5 text-[11px] ${tab === "tala" ? "bg-white/25" : "bg-brand-50 text-brand-700"}`}>
+                  {tala.items.length.toLocaleString("fa-IR")}
+                </span>
+              </button>
+            </div>
+            <p
+              className={`flex items-center gap-2 rounded-full border px-4 py-2 text-[12.5px] font-black ${
+                active.live ? "border-green-200 bg-green-50 text-green-700" : "border-amber-200 bg-amber-50 text-amber-700"
+              }`}
+            >
+              <span className={`h-2 w-2 rounded-full ${active.live ? "animate-live bg-green-500" : "bg-amber-400"}`} />
+              {active.live
+                ? `متصل به بازار — به‌روزرسانی: ${formatUpdateTime(active.updatedAt)}`
+                : "حالت آفلاین — نمایش آخرین نرخ‌های ثبت‌شده"}
+            </p>
+          </div>
+        </Reveal>
+
+        <div className="mt-6 grid items-start gap-6 lg:grid-cols-[1.5fr_1fr]">
+          <Reveal className="min-w-0">
             <div className="overflow-hidden rounded-[28px] border border-brand-100 bg-white shadow-card">
-              <div className="flex items-center justify-between bg-gradient-to-l from-brand-950 to-brand-700 px-5 py-4 text-white">
+              <div
+                className={`flex items-center justify-between px-5 py-4 text-white ${
+                  tab === "arz" ? "bg-gradient-to-l from-brand-950 to-brand-700" : "bg-gradient-to-l from-amber-600 to-orange-500"
+                }`}
+              >
                 <p className="flex items-center gap-2 text-[14px] font-black">
                   <span className="h-2 w-2 animate-live rounded-full bg-green-400" />
-                  تابلوی معاملات تریدچاره
+                  {tab === "arz" ? "تابلوی ارز تریدچاره" : "تابلوی طلا و سکه تریدچاره"}
                 </p>
-                <p className="text-[12px] font-bold text-sky-200">واحد: تومان</p>
+                <p className="text-[12px] font-bold text-white/80">واحد: تومان</p>
               </div>
-              <div className="hidden grid-cols-[1.3fr_1fr_1fr_0.8fr_auto] gap-4 border-b border-brand-100 bg-brand-50/60 px-5 py-2.5 text-[11.5px] font-black text-slate-400 sm:grid">
-                <span>ارز</span>
-                <span className="text-right">خرید</span>
-                <span className="text-right">فروش</span>
-                <span>تغییر روز</span>
-                <span className="hidden md:block">روند ۷ روزه</span>
+              <div className="chat-scroll max-h-[548px] overflow-y-auto">
+                {active.items.map((r) => (
+                  <LiveRow key={`${r.code}-${r.name}`} item={r} />
+                ))}
               </div>
-              {RATES.map((r) => (
-                <Row key={r.code} r={r} />
-              ))}
             </div>
           </Reveal>
           <Reveal delay={140}>
             <Converter />
           </Reveal>
         </div>
-      </div>
-    </section>
-  );
-}
-
-/* ================= Pricing ================= */
-
-export function Pricing() {
-  const { openContact } = useUI();
-  return (
-    <section id="pricing" className="relative scroll-mt-28 py-20 lg:py-28">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <SectionHead
-          eyebrow="نرخ‌نامه شفاف خدمات"
-          title={
-            <>
-              قیمت‌گذاری <span className="text-gradient">بدون هزینه پنهان</span>
-            </>
-          }
-          desc="پیش‌فاکتور رسمی قبل از شروع کار، تسویه با فاکتور رسمی بعد از تحویل. همین‌قدر ساده و شفاف."
-        />
-
-        <div className="mt-12 grid items-stretch gap-6 lg:grid-cols-3">
-          {PLANS.map((p, i) => (
-            <Reveal key={p.name} delay={i * 110} className="h-full">
-              <div
-                className={`relative flex h-full flex-col gap-5 rounded-[30px] border p-7 transition hover:-translate-y-2 ${
-                  p.featured
-                    ? "border-brand-400 bg-gradient-to-b from-brand-700 via-brand-600 to-brand-800 text-white shadow-soft hover:shadow-glow"
-                    : "border-brand-100 bg-white shadow-card hover:border-brand-300"
-                }`}
-              >
-                {p.featured && (
-                  <>
-                    <span className="absolute -top-4 right-1/2 translate-x-1/2 rounded-full bg-gradient-to-l from-amber-400 to-orange-400 px-5 py-1.5 text-[12px] font-black whitespace-nowrap text-white shadow-lg">
-                      ⭐ محبوب‌ترین انتخاب بازرگانان
-                    </span>
-                    <div className="bg-grid-white absolute inset-0 rounded-[30px] opacity-40" />
-                  </>
-                )}
-                <div className="relative">
-                  <h3 className={`text-[18px] font-black ${p.featured ? "text-white" : "text-ink-900"}`}>{p.name}</h3>
-                  <p className={`mt-1 text-[13px] font-bold ${p.featured ? "text-sky-200" : "text-slate-400"}`}>{p.desc}</p>
-                </div>
-                <div className="relative flex items-end gap-2">
-                  <span className={`text-[38px] leading-none font-black ${p.featured ? "text-white" : "text-gradient"}`}>{p.price}</span>
-                  <span className={`pb-1 text-[13px] font-black ${p.featured ? "text-sky-200" : "text-slate-400"}`}>{p.unit}</span>
-                </div>
-                <ul className="relative flex flex-col gap-3">
-                  {p.features.map((f) => (
-                    <li key={f} className={`flex items-start gap-2.5 text-[13.5px] leading-7 font-bold ${p.featured ? "text-sky-50" : "text-slate-600"}`}>
-                      <span className={`mt-1.5 grid h-5 w-5 shrink-0 place-items-center rounded-full ${p.featured ? "bg-cyan-300/30 text-cyan-200" : "bg-green-50 text-green-600"}`}>
-                        <I name="check" className="h-3 w-3" strokeWidth={3} />
-                      </span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <button
-                  onClick={openContact}
-                  className={`relative mt-auto rounded-2xl px-6 py-3.5 text-[15px] font-black transition ${
-                    p.featured
-                      ? "btn-shine bg-white text-brand-800 shadow-glow hover:bg-brand-50"
-                      : "border-2 border-brand-200 text-brand-700 hover:border-brand-500 hover:bg-brand-50"
-                  }`}
-                >
-                  {p.cta}
-                </button>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-
-        <Reveal delay={120}>
-          <div className="mt-8 overflow-hidden rounded-[28px] border border-brand-100 bg-white shadow-card">
-            <div className="flex items-center gap-2 border-b border-brand-100 bg-brand-50/60 px-6 py-4">
-              <I name="doc" className="h-5 w-5 text-brand-600" />
-              <h3 className="text-[15px] font-black text-ink-900">ریز نرخ‌نامه خدمات پرکاربرد</h3>
-            </div>
-            <div className="grid md:grid-cols-2">
-              {FEES.map((f, i) => (
-                <div key={f.service} className={`flex items-center justify-between gap-4 px-6 py-4 ${i % 2 === 0 ? "md:border-l" : ""} border-b border-brand-50 transition last:border-b-0 hover:bg-brand-50/50 md:[&:nth-last-child(-n+2)]:border-b-0`}>
-                  <span className="flex items-center gap-2.5 text-[13.5px] font-bold text-slate-600">
-                    <I name="check" className="h-4 w-4 shrink-0 text-brand-500" strokeWidth={2.5} />
-                    {f.service}
-                  </span>
-                  <span className="shrink-0 rounded-full bg-brand-50 px-3.5 py-1.5 text-[12.5px] font-black whitespace-nowrap text-brand-700">
-                    {f.fee}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Reveal>
       </div>
     </section>
   );
