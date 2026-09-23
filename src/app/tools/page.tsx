@@ -2,6 +2,7 @@
 
 import { useRates } from "@/lib/useRates";
 import { CtaBanner } from "@/components/Closing";
+import { Breadcrumbs } from "@/components/Seo";
 import { I, Reveal, SectionHead, useUI } from "@/components/ui";
 
 const TOOLS = [
@@ -77,6 +78,12 @@ export default function ToolsPage() {
         </div>
         <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2">
           <div className="flex flex-col items-center gap-5 text-center lg:items-start lg:text-start">
+            <Breadcrumbs
+              items={[
+                { name: "خانه", href: "/" },
+                { name: "ابزارها و اپلیکیشن", href: "/tools" },
+              ]}
+            />
             <Reveal>
               <span className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white/80 px-4 py-1.5 text-[13px] font-black text-brand-700 shadow-sm">
                 <I name="bot" className="h-4 w-4" />

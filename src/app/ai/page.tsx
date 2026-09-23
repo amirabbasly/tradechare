@@ -4,6 +4,7 @@ import { useChat } from "@/lib/useChat";
 import { AiOrb, AiWaves } from "@/components/AiOrb";
 import { ChatPanel } from "@/components/AiShowcase";
 import { CtaBanner } from "@/components/Closing";
+import { Breadcrumbs } from "@/components/Seo";
 import { I, Reveal } from "@/components/ui";
 
 const EXAMPLES = [
@@ -22,6 +23,12 @@ const CAPS = [
   { icon: "clock", t: "پیش‌بینی زمان ترخیص", d: "تخمین دقیق بر اساس گمرک و نوع کالا" },
   { icon: "doc", t: "راهنمای بخشنامه‌ها", d: "پاسخ بر اساس آخرین قوانین گمرکی" },
   { icon: "chat", t: "پشتیبانی ۲۴ ساعته", d: "همیشه آنلاین، حتی نیمه‌شب و تعطیلات" },
+];
+
+const AI_GUIDES = [
+  { icon: "search", t: "پیدا کردن کد HS کالا", d: "راهنمای تشخیص تعرفه", slug: "find-hs-code" },
+  { icon: "chart", t: "تحلیل بازار ارز", d: "چه زمانی ارز بخریم؟", slug: "fx-analysis-importers" },
+  { icon: "file", t: "ثبت سفارش قدم‌به‌قدم", d: "آموزش سامانه جامع تجارت", slug: "order-registration-samane" },
 ];
 
 export default function AiPage() {
@@ -57,6 +64,15 @@ export default function AiPage() {
         </div>
 
         <div className="relative mx-auto flex max-w-4xl flex-col items-center gap-5 px-4 text-center sm:px-6">
+          <div className="flex justify-center">
+            <Breadcrumbs
+              tone="light"
+              items={[
+                { name: "خانه", href: "/" },
+                { name: "چاره‌بات", href: "/ai" },
+              ]}
+            />
+          </div>
           <Reveal>
             <AiOrb size={170} active={chat.typing} />
           </Reveal>
@@ -160,6 +176,35 @@ export default function AiPage() {
                   <h3 className="text-[16px] font-black text-ink-900">{c.t}</h3>
                   <p className="text-[13px] leading-7 text-slate-500">{c.d}</p>
                 </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* guides */}
+      <section className="pb-14 lg:pb-20">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <Reveal className="mx-auto max-w-2xl text-center">
+            <h2 className="text-2xl font-black text-ink-900 sm:text-3xl">
+              عمیق‌تر بدانید؛ <span className="text-gradient">راهنماهای چاره‌بات</span>
+            </h2>
+          </Reveal>
+          <div className="mt-8 grid gap-3 sm:grid-cols-3">
+            {AI_GUIDES.map((g, i) => (
+              <Reveal key={g.slug} delay={i * 80}>
+                <a
+                  href={`/blog/${g.slug}`}
+                  className="group flex h-full items-center gap-3 rounded-3xl border border-brand-100 bg-white p-4 text-start shadow-sm transition hover:-translate-y-1 hover:border-brand-400 hover:shadow-card"
+                >
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-brand-50 text-brand-600 transition group-hover:bg-gradient-to-br group-hover:from-brand-500 group-hover:to-brand-700 group-hover:text-white">
+                    <I name={g.icon} className="h-5 w-5" />
+                  </span>
+                  <span>
+                    <span className="block text-[13.5px] font-black text-ink-900">{g.t}</span>
+                    <span className="mt-0.5 block text-[11.5px] font-bold text-slate-400">{g.d}</span>
+                  </span>
+                </a>
               </Reveal>
             ))}
           </div>

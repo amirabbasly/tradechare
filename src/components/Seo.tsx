@@ -120,7 +120,14 @@ export function ArticleJsonLd({ article }: { article: Article }) {
 }
 
 /** بردکرامب تصویری + اسکیما برای صفحات داخلی */
-export function Breadcrumbs({ items }: { items: { name: string; href: string }[] }) {
+export function Breadcrumbs({
+  items,
+  tone = "dark",
+}: {
+  items: { name: string; href: string }[];
+  tone?: "dark" | "light";
+}) {
+  const light = tone === "light";
   return (
     <>
       <JsonLd
@@ -135,14 +142,17 @@ export function Breadcrumbs({ items }: { items: { name: string; href: string }[]
           })),
         }}
       />
-      <nav aria-label="مسیر صفحه" className="flex flex-wrap items-center gap-1.5 text-[12.5px] font-bold text-stone-400">
+      <nav
+        aria-label="مسیر صفحه"
+        className={`flex flex-wrap items-center gap-1.5 text-[12.5px] font-bold ${light ? "text-stone-300" : "text-stone-400"}`}
+      >
         {items.map((it, i) => (
           <span key={it.href} className="flex items-center gap-1.5">
-            {i > 0 && <span className="text-brand-300">‹</span>}
+            {i > 0 && <span className={light ? "text-white/30" : "text-brand-300"}>‹</span>}
             {i === items.length - 1 ? (
-              <span className="text-brand-700">{it.name}</span>
+              <span className={light ? "text-white" : "text-brand-700"}>{it.name}</span>
             ) : (
-              <a href={it.href} className="transition hover:text-brand-600">
+              <a href={it.href} className={`transition ${light ? "hover:text-white" : "hover:text-brand-600"}`}>
                 {it.name}
               </a>
             )}

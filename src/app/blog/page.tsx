@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ARTICLES } from "@/lib/blog";
 import { CtaBanner } from "@/components/Closing";
+import { Breadcrumbs } from "@/components/Seo";
 import { I, Reveal, SectionHead } from "@/components/ui";
 
 export const metadata = {
@@ -22,6 +23,14 @@ export default function BlogPage() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="mb-4 flex justify-center">
+            <Breadcrumbs
+              items={[
+                { name: "خانه", href: "/" },
+                { name: "مقالات", href: "/blog" },
+              ]}
+            />
+          </div>
           <SectionHead
             eyebrow="کتابخانه دانش بازرگانی"
             title={<>مقالات آموزشی <span className="text-gradient">تریدچاره</span></>}

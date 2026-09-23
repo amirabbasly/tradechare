@@ -4,6 +4,7 @@ import Image from "next/image";
 import { SERVICES, STEPS } from "@/lib/data";
 import { I, Reveal, SectionHead, useUI } from "@/components/ui";
 import { CtaBanner } from "@/components/Closing";
+import { Breadcrumbs, JsonLd } from "@/components/Seo";
 
 const DETAILS: Record<string, string[]> = {
   "ترخیص از کلیه گمرکات": [
@@ -56,11 +57,46 @@ const DETAILS: Record<string, string[]> = {
   ],
 };
 
+/** راهنمای متنی مرتبط با هر خدمت — لینک‌سازی خدمت ↔ مقاله */
+const ARTICLE_GUIDE: Record<string, { slug: string; label: string }> = {
+  "ترخیص از کلیه گمرکات": { slug: "shahid-rajaee-clearance-guide", label: "راهنمای ترخیص از شهید رجایی" },
+  "ثبت سفارش و سامانه EPL": { slug: "order-registration-samane", label: "آموزش ثبت سفارش" },
+  "تخصیص ارز نیما و توافقی": { slug: "currency-allocation-import", label: "راهنمای تخصیص ارز" },
+  "حمل بین‌المللی": { slug: "sea-vs-air-freight", label: "حمل دریایی یا هوایی؟" },
+  "اعتبارات و امور بانکی": { slug: "export-commitment", label: "رفع تعهد ارزی" },
+  "استعلام تعرفه و HS Code": { slug: "find-hs-code", label: "پیدا کردن کد HS" },
+  "مدیریت سرمایه تجاری": { slug: "fx-analysis-importers", label: "تحلیل بازار ارز" },
+  "بیمه و بازرسی کالا": { slug: "cargo-insurance", label: "بیمه باربری و بازرسی" },
+};
+
 const GUIDES = [
   { slug: "shahid-rajaee-clearance-guide", title: "راهنمای ترخیص از گمرک شهید رجایی", desc: "از اظهارنامه تا پروانه؛ ترفندهای کاهش خواب کالا", cover: "/images/blog-clearance.png" },
   { slug: "order-registration-samane", title: "ثبت سفارش در سامانه جامع تجارت", desc: "آموزش قدم‌به‌قدم بدون حتی یک برگشت پرونده", cover: "/images/blog-portal.png" },
   { slug: "car-clearance", title: "ترخیص خودرو از گمرک", desc: "شرایط، مدارک و عوارض خودروهای وارداتی", cover: "/images/blog-car.png" },
   { slug: "cargo-insurance", title: "بیمه باربری و بازرسی کالا", desc: "محافظت از سرمایه با بیمه و بازرسی مبدا", cover: "/images/blog-shipping.png" },
+];
+
+const SERVICES_FAQS = [
+  {
+    q: "هزینه ترخیص کالا چقدر می‌شود؟",
+    a: "هزینه ترخیص شامل حقوق ورودی گمرک (حقوق گمرکی، سود بازرگانی، مالیات و عوارض)، هزینه‌های بندری و انبارداری و کارمزد کارگزاری است. برای برآورد دقیق بخش گمرکی از ماشین‌حساب حقوق ورودی تریدچاره استفاده کنید؛ پیش‌فاکتور رسمی ما قبل از شروع کار صادر می‌شود.",
+  },
+  {
+    q: "ترخیص کالا چقدر طول می‌کشد؟",
+    a: "پرونده‌های استاندارد در گمرک شهید رجایی معمولاً ۳ تا ۵ روز کاری به پروانه می‌رسند. کالاهای نیازمند مجوز استاندارد یا بهداشت کمی بیشتر زمان می‌برند. ترخیص اضطراری فرودگاهی در کمتر از ۲۴ ساعت هم امکان‌پذیر است.",
+  },
+  {
+    q: "آیا بدون کارت بازرگانی می‌توان واردات کرد؟",
+    a: "برای ثبت سفارش و ترخیص به نام خودتان به کارت بازرگانی نیاز دارید؛ اما اگر کارت ندارید، می‌توانید از خدمات «واردات با کارت بازرگانی تریدچاره» استفاده کنید و کالا را به نام ما وارد و سپس تحویل بگیرید.",
+  },
+  {
+    q: "کدام گمرک برای کالای من مناسب‌تر است؟",
+    a: "به نوع کالا، مبدا حمل و مجوزهای لازم بستگی دارد: شهید رجایی برای کانتینر، فرودگاه امام برای مرسولات هوایی و فوری، و گمرکات تخصصی برای خودرو و کالاهای خاص. کارشناسان ما بهترین گمرک را بر اساس کالای شما پیشنهاد می‌دهند.",
+  },
+  {
+    q: "آیا می‌توانم پرونده‌ام را لحظه‌ای پیگیری کنم؟",
+    a: "بله؛ هر پرونده یک مدیر اختصاصی و یک پنل رهگیری دارد که مراحل اظهارنامه، ارزیابی، مجوزها و پروانه را لحظه‌ای نمایش می‌دهد. همچنین از طریق چاره‌بات می‌توانید ۲۴ ساعته وضعیت پرونده را استعلام بگیرید.",
+  },
 ];
 
 export default function ServicesPage() {
@@ -75,7 +111,15 @@ export default function ServicesPage() {
           <div className="bg-grid absolute inset-0 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_35%,black,transparent)]" />
           <div className="animate-drift absolute -top-24 right-1/4 h-96 w-96 rounded-full bg-brand-200/60 blur-3xl" />
         </div>
-        <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2">
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
+          <Breadcrumbs
+            items={[
+              { name: "خانه", href: "/" },
+              { name: "خدمات بازرگانی", href: "/services" },
+            ]}
+          />
+        </div>
+        <div className="relative mx-auto mt-6 grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2">
           <div className="flex flex-col items-center gap-5 text-center lg:items-start lg:text-start">
             <Reveal>
               <span className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white/80 px-4 py-1.5 text-[13px] font-black text-brand-700 shadow-sm">
@@ -168,6 +212,16 @@ export default function ServicesPage() {
                       </li>
                     ))}
                   </ul>
+                  {ARTICLE_GUIDE[s.title] && (
+                    <a
+                      href={`/blog/${ARTICLE_GUIDE[s.title].slug}`}
+                      className="flex items-center gap-2 rounded-2xl border border-dashed border-brand-300 bg-brand-50/50 px-4 py-2.5 text-[13px] font-black text-brand-700 transition hover:border-brand-500 hover:bg-brand-50"
+                    >
+                      <I name="doc" className="h-4.5 w-4.5 shrink-0" />
+                      راهنمای کامل: {ARTICLE_GUIDE[s.title].label}
+                      <I name="arrow" className="mr-auto h-4 w-4 shrink-0" />
+                    </a>
+                  )}
                   <button
                     onClick={openContact}
                     className="mt-auto flex items-center justify-center gap-2 rounded-2xl border-2 border-brand-100 px-5 py-3 text-[14px] font-black text-brand-700 transition hover:border-brand-500 hover:bg-brand-50"
@@ -244,6 +298,43 @@ export default function ServicesPage() {
                     <span className="mt-1 block text-[12px] leading-6 font-bold text-slate-500">{s.desc}</span>
                   </span>
                 </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="pb-14">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6">
+          <JsonLd
+            data={{
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: SERVICES_FAQS.map((f) => ({
+                "@type": "Question",
+                name: f.q,
+                acceptedAnswer: { "@type": "Answer", text: f.a },
+              })),
+            }}
+          />
+          <SectionHead
+            eyebrow="سوالات پرتکرار"
+            title={<>قبل از سفارش، <span className="text-gradient">بدانید</span></>}
+          />
+          <div className="mt-8 flex flex-col gap-3">
+            {SERVICES_FAQS.map((f, i) => (
+              <Reveal key={f.q} delay={i * 60}>
+                <details className="group overflow-hidden rounded-3xl border border-brand-100 bg-white shadow-sm transition open:border-brand-300 open:shadow-card">
+                  <summary className="flex cursor-pointer list-none items-center gap-3 px-6 py-5 [&::-webkit-details-marker]:hidden">
+                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-brand-50 text-brand-600 transition group-open:bg-brand-600 group-open:text-white">
+                      <I name="chat" className="h-4.5 w-4.5" />
+                    </span>
+                    <span className="flex-1 text-[14.5px] font-black text-ink-900">{f.q}</span>
+                    <I name="down" className="h-4 w-4 shrink-0 text-brand-500 transition group-open:rotate-180" />
+                  </summary>
+                  <p className="px-6 pb-6 text-[13.5px] leading-8 text-stone-500">{f.a}</p>
+                </details>
               </Reveal>
             ))}
           </div>

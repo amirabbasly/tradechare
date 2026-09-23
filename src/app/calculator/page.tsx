@@ -5,6 +5,7 @@ import Image from "next/image";
 import { faToman } from "@/lib/data";
 import { useRates } from "@/lib/useRates";
 import { I, Reveal, useUI } from "@/components/ui";
+import { Breadcrumbs } from "@/components/Seo";
 
 /* ---------- helpers ---------- */
 
@@ -281,6 +282,14 @@ export default function CalculatorPage() {
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
           <div className="mx-auto flex max-w-2xl flex-col items-center gap-4 text-center">
+            <div className="flex justify-center">
+              <Breadcrumbs
+                items={[
+                  { name: "خانه", href: "/" },
+                  { name: "ماشین‌حساب ارز و حقوق گمرکی", href: "/calculator" },
+                ]}
+              />
+            </div>
             <Reveal>
               <span className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white/80 px-4 py-1.5 text-[13px] font-black text-brand-700 shadow-sm">
                 <I name="calc" className="h-4 w-4" />
@@ -334,6 +343,18 @@ export default function CalculatorPage() {
                   تعرفه (کتاب مقررات صادرات و واردات) استخراج می‌شود؛ برای صدور پیش‌فاکتور دقیق با کارشناسان ما در
                   تماس باشید.
                 </p>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-[12px] font-black text-slate-400">راهنماهای مرتبط:</span>
+                  <a href="/blog/find-hs-code" className="rounded-full border border-brand-200 bg-brand-50 px-3.5 py-1.5 text-[12px] font-black text-brand-700 transition hover:bg-brand-100">
+                    پیدا کردن کد HS
+                  </a>
+                  <a href="/blog/import-rules-1405" className="rounded-full border border-brand-200 bg-brand-50 px-3.5 py-1.5 text-[12px] font-black text-brand-700 transition hover:bg-brand-100">
+                    قوانین واردات ۱۴۰۵
+                  </a>
+                  <a href="/markets" className="rounded-full border border-brand-200 bg-brand-50 px-3.5 py-1.5 text-[12px] font-black text-brand-700 transition hover:bg-brand-100">
+                    نرخ لحظه‌ای ارز
+                  </a>
+                </div>
               </div>
             </Reveal>
             <Reveal delay={120}>

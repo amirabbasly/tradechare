@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ARTICLES, type Article } from "@/lib/blog";
+import { SITE_URL } from "@/lib/site";
 import { CtaBanner } from "@/components/Closing";
 import { ArticleCta, ArticleJsonLd, Breadcrumbs } from "@/components/Seo";
 import { I } from "@/components/ui";
@@ -12,10 +13,27 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const a = ARTICLES.find((x) => x.slug === slug);
+  if (!a) return { title: "مقاله" };
   return {
-    title: a?.title ?? "مقاله",
-    description: a?.excerpt ?? "",
+    title: a.title,
+    description: a.excerpt,
+    authors: [{ name: "تیم تحریریه تریدچاره", url: SITE_URL }],
     alternates: { canonical: `/blog/${slug}` },
+    openGraph: {
+      title: a.title,
+      description: a.excerpt,
+      url: `${SITE_URL}/blog/${slug}`,
+      type: "article",
+      section: a.category,
+      tags: a.tags,
+      images: [{ url: a.cover, width: 1200, height: 630, alt: a.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: a.title,
+      description: a.excerpt,
+      images: [a.cover],
+    },
   };
 }
 
@@ -42,6 +60,22 @@ function renderRich(text: string, keyPrefix: string) {
   return out;
 }
 
+/** هر آیتم body یا پاراگراف است یا سرفصل (شروع با ##) */
+function renderBlock(block: string, key: string) {
+  if (block.startsWith("## ")) {
+    return (
+      <h2 key={key} className="pt-2 text-[21px] leading-9 font-black text-ink-900">
+        {block.replace(/^##\s+/, "")}
+      </h2>
+    );
+  }
+  return (
+    <p key={key} className="text-[15px] leading-9.5 font-medium text-stone-600">
+      {renderRich(block, key)}
+    </p>
+  );
+}
+
 function relatedArticles(article: Article): Article[] {
   const scored = ARTICLES.filter((a) => a.slug !== article.slug).map((a) => ({
     a,
@@ -59,6 +93,29 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   if (!article) notFound();
 
   const related = relatedArticles(article);
+  const pageUrl = `${SITE_URL}/blog/${article.slug}`;
+  const shareLinks = [
+    {
+      name: "تلگرام",
+      icon: "send",
+      href: `https://t.me/share/url?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent(article.title)}`,
+    },
+    {
+      name: "واتساپ",
+      icon: "chat",
+      href: `https://wa.me/?text=${encodeURIComponent(`${article.title} ${pageUrl}`)}`,
+    },
+    {
+      name: "لینکدین",
+      icon: "users",
+      href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(pageUrl)}`,
+    },
+    {
+      name: "ایکس",
+      icon: "x",
+      href: `https://x.com/intent/tweet?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent(article.title)}`,
+    },
+  ];
 
   return (
     <main className="overflow-hidden">
@@ -96,16 +153,25 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           </h1>
           <p className="mt-3 text-[15px] leading-9 font-bold text-stone-500">{article.excerpt}</p>
 
-          <div className="relative mt-7 h-64 overflow-hidden rounded-[28px] shadow-soft sm:h-96">
+          {/* byline */}
+          <div className="mt-5 flex items-center gap-3 rounded-2xl border border-brand-100 bg-white/80 px-4 py-3 backdrop-blur">
+            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-brand-500 to-brand-800 text-[16px] font-black text-white">
+              تر
+            </span>
+            <span className="leading-tight">
+              <span className="block text-[13.5px] font-black text-ink-900">تیم تحریریه تریدچاره</span>
+              <span className="mt-0.5 block text-[11.5px] font-bold text-stone-400">
+                بازبینی‌شده توسط کارشناسان گمرک • {article.date}
+              </span>
+            </span>
+          </div>
+
+          <div className="relative mt-6 h-64 overflow-hidden rounded-[28px] shadow-soft sm:h-96">
             <Image src={article.cover} alt={article.title} fill className="object-cover" priority />
           </div>
 
           <div className="mt-8 flex flex-col gap-5">
-            {article.body.slice(0, 2).map((p, i) => (
-              <p key={i} className="text-[15px] leading-9.5 font-medium text-stone-600">
-                {renderRich(p, `a${i}`)}
-              </p>
-            ))}
+            {article.body.slice(0, 3).map((p, i) => renderBlock(p, `a${i}`))}
           </div>
 
           <div className="mt-7">
@@ -113,25 +179,38 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           </div>
 
           <div className="mt-7 flex flex-col gap-5">
-            {article.body.slice(2).map((p, i) => (
-              <p key={i} className="text-[15px] leading-9.5 font-medium text-stone-600">
-                {renderRich(p, `b${i}`)}
-              </p>
-            ))}
+            {article.body.slice(3).map((p, i) => renderBlock(p, `b${i}`))}
           </div>
 
-          {/* tags */}
-          <div className="mt-8 flex flex-wrap items-center gap-2 border-t border-brand-100 pt-6">
-            <span className="text-[13px] font-black text-stone-400">برچسب‌ها:</span>
-            {article.tags.map((t) => (
-              <a
-                key={t}
-                href="/blog"
-                className="rounded-full border border-brand-200 bg-brand-50 px-3.5 py-1.5 text-[12px] font-black text-brand-700 transition hover:bg-brand-100"
-              >
-                #{t}
-              </a>
-            ))}
+          {/* tags + share */}
+          <div className="mt-8 flex flex-col gap-4 border-t border-brand-100 pt-6">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-[13px] font-black text-stone-400">برچسب‌ها:</span>
+              {article.tags.map((t) => (
+                <a
+                  key={t}
+                  href="/blog"
+                  className="rounded-full border border-brand-200 bg-brand-50 px-3.5 py-1.5 text-[12px] font-black text-brand-700 transition hover:bg-brand-100"
+                >
+                  #{t}
+                </a>
+              ))}
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-[13px] font-black text-stone-400">اشتراک‌گذاری:</span>
+              {shareLinks.map((s) => (
+                <a
+                  key={s.name}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={`اشتراک در ${s.name}`}
+                  className="grid h-10 w-10 place-items-center rounded-2xl border border-brand-200 bg-white text-brand-600 shadow-sm transition hover:-translate-y-0.5 hover:border-brand-400 hover:shadow-card"
+                >
+                  <I name={s.icon} className="h-4.5 w-4.5" />
+                </a>
+              ))}
+            </div>
           </div>
 
           <div className="mt-6 flex flex-col items-start gap-3 rounded-[26px] bg-gradient-to-l from-brand-800 to-brand-600 p-6 text-white shadow-soft sm:flex-row sm:items-center">
