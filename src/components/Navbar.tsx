@@ -77,7 +77,17 @@ export default function Navbar() {
             ))}
           </nav>
 
-          <div className="hidden items-center gap-3 lg:flex">
+          <div className="hidden items-center gap-2.5 lg:flex">
+            <a
+              href="/ai"
+              className="group flex items-center gap-2 rounded-full border border-cyan-300 bg-gradient-to-l from-brand-50 to-cyan-50 px-4 py-2.5 text-[13px] font-black text-brand-700 shadow-sm transition hover:shadow-card"
+            >
+              <span className="grid h-6 w-6 place-items-center rounded-full bg-gradient-to-br from-cyan-400 to-brand-600 text-white transition group-hover:scale-110">
+                <I name="bot" className="h-3.5 w-3.5" />
+              </span>
+              چاره‌بات
+              <span className="h-1.5 w-1.5 animate-live rounded-full bg-green-500" />
+            </a>
             <a
               href="/#rates"
               className="flex items-center gap-2 rounded-full border border-brand-200 bg-white px-4 py-2.5 text-[13px] font-black text-brand-700 shadow-sm transition hover:border-brand-300 hover:shadow-card"
@@ -116,6 +126,15 @@ export default function Navbar() {
                 {l.label}
               </a>
             ))}
+            <a
+              href="/ai"
+              onClick={() => setMenu(false)}
+              className="mt-1 flex items-center justify-center gap-2 rounded-2xl border border-cyan-300 bg-gradient-to-l from-brand-50 to-cyan-50 px-6 py-3 text-[14px] font-black text-brand-700"
+            >
+              <I name="bot" className="h-5 w-5" />
+              چاره‌بات — هوش مصنوعی
+              <span className="h-1.5 w-1.5 animate-live rounded-full bg-green-500" />
+            </a>
             <button
               onClick={() => {
                 setMenu(false);
@@ -128,6 +147,7 @@ export default function Navbar() {
             </button>
           </div>
         )}
+        <div className="nav-line" />
       </div>
     </header>
   );

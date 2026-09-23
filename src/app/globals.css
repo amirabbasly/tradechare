@@ -350,3 +350,228 @@ body {
 input[type="number"]::-webkit-inner-spin-button {
   opacity: 1;
 }
+
+/* ---------- AI orb & animated decor ---------- */
+.ai-orb {
+  position: relative;
+  flex-shrink: 0;
+}
+.ai-orb-glow {
+  position: absolute;
+  inset: -18%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(34 211 238 / 0.35), rgb(31 116 255 / 0.12) 55%, transparent 70%);
+  animation: orb-breathe 4s ease-in-out infinite;
+}
+.ai-orb-core {
+  position: absolute;
+  inset: 14%;
+  border-radius: 42% 58% 63% 37% / 45% 42% 58% 55%;
+  background: conic-gradient(from 0deg, #22d3ee, #1f74ff, #a78bfa, #0b5fe6, #22d3ee);
+  animation:
+    orb-morph 9s ease-in-out infinite,
+    spin-slow 20s linear infinite;
+  box-shadow:
+    0 0 70px 12px rgb(34 211 238 / 0.45),
+    inset 0 0 46px rgb(255 255 255 / 0.4);
+}
+.ai-orb-core::after {
+  content: "";
+  position: absolute;
+  inset: 24%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, rgb(255 255 255 / 0.9), rgb(255 255 255 / 0.12) 60%, transparent 72%);
+}
+.ai-orb-face {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+.ai-orb-face svg {
+  width: 30%;
+  height: 30%;
+}
+.ai-orb-halo {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.ai-orb-halo.h1 {
+  inset: 2%;
+  border: 1.5px dashed rgb(125 188 255 / 0.6);
+  animation: spin-slow 26s linear infinite;
+}
+.ai-orb-halo.h2 {
+  inset: -7%;
+  border: 1.5px solid rgb(34 211 238 / 0.28);
+  animation: spin-rev 44s linear infinite;
+}
+.ai-orb-active .ai-orb-core {
+  animation-duration: 4s, 8s;
+}
+@keyframes orb-morph {
+  0%,
+  100% {
+    border-radius: 42% 58% 63% 37% / 45% 42% 58% 55%;
+  }
+  33% {
+    border-radius: 60% 40% 36% 64% / 56% 60% 40% 44%;
+  }
+  66% {
+    border-radius: 50% 50% 56% 44% / 47% 54% 46% 53%;
+  }
+}
+@keyframes orb-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+}
+
+/* equalizer */
+.eq {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 22px;
+}
+.eq > span {
+  width: 4px;
+  border-radius: 99px;
+  background: linear-gradient(to top, #1f74ff, #22d3ee);
+  animation: eq-bounce 1s ease-in-out infinite;
+}
+.eq.eq-light > span {
+  background: linear-gradient(to top, #fff, #67e8f9);
+}
+@keyframes eq-bounce {
+  0%,
+  100% {
+    height: 28%;
+  }
+  50% {
+    height: 100%;
+  }
+}
+
+/* orbit ring */
+.orbit-ring {
+  position: relative;
+  pointer-events: none;
+  flex-shrink: 0;
+  animation: spin-slow var(--orbit-duration, 28s) linear infinite;
+}
+.orbit-item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -26px;
+}
+.orbit-item-inner {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 16px;
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 900;
+  color: #0a1c44;
+  background: rgb(255 255 255 / 0.85);
+  border: 1px solid rgb(179 217 255 / 0.8);
+  box-shadow: 0 12px 30px -10px rgb(11 95 230 / 0.4);
+  backdrop-filter: blur(12px);
+  animation: spin-rev var(--orbit-duration, 28s) linear infinite;
+}
+.orbit-item-inner em {
+  font-style: normal;
+}
+.orbit-item-inner svg {
+  color: #0b5fe6;
+}
+@keyframes spin-rev {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+/* particles */
+.particle {
+  position: absolute;
+  border-radius: 99px;
+  background: radial-gradient(circle, #7cbcff, rgb(124 188 255 / 0));
+  animation: twinkle 4s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.15;
+    transform: translateY(0) scale(0.8);
+  }
+  50% {
+    opacity: 0.9;
+    transform: translateY(-18px) scale(1.15);
+  }
+}
+
+/* typewriter caret */
+.type-caret {
+  display: inline-block;
+  margin-right: 2px;
+  color: #0b5fe6;
+  font-weight: 900;
+  animation: caret-blink 0.9s step-end infinite;
+}
+@keyframes caret-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* animated gradient text */
+.text-shine-anim {
+  background: linear-gradient(110deg, #0b5fe6 20%, #22d3ee 40%, #a78bfa 55%, #0b5fe6 75%);
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-pan 5s linear infinite;
+}
+@keyframes gradient-pan {
+  to {
+    background-position: 220% center;
+  }
+}
+
+/* nav shimmer line */
+.nav-line {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #22d3ee, #1f74ff, #a78bfa, transparent);
+  background-size: 200% 100%;
+  animation: gradient-pan 4s linear infinite;
+}
+
+/* slow bounce for scroll hints */
+@keyframes float-x {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-10px);
+  }
+}
+.animate-float-x {
+  animation: float-x 5s ease-in-out infinite;
+}

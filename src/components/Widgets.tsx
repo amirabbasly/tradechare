@@ -2,6 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ADDRESSES, PHONES } from "@/lib/data";
+import { CHAT_SUGGESTIONS } from "@/lib/chatBrain";
+import { useChat } from "@/lib/useChat";
+import { AiOrb, AiWaves } from "./AiOrb";
 import { I, useUI } from "./ui";
 
 /* ================= Contact modal ================= */
@@ -99,79 +102,28 @@ function ContactModal() {
   );
 }
 
-/* ================= AI chat widget ================= */
-
-type Msg = { from: "bot" | "user"; text: string; action?: "contact" };
-
-const QUICK = [
-  "هزینه ترخیص چقدره؟",
-  "نرخ دلار امروز؟",
-  "ثبت سفارش چطور انجام میشه؟",
-  "صحبت با کارشناس",
-];
-
-function botReply(q: string): { text: string; action?: "contact" } {
-  const t = q.replace(/ي/g, "ی").replace(/ك/g, "ک");
-  if (/(سلام|درود|وقت بخیر|هی|hello)/i.test(t))
-    return { text: "سلام! 👋 من چاره‌بات هستم، دستیار هوشمند بازرگانی تریدچاره. چطور می‌تونم کمکتون کنم؟ (ترخیص، ثبت سفارش، نرخ ارز، تعرفه…)" };
-  if (/(کارشناس|تلفن|تماس|شماره|مشاوره)/.test(t))
-    return {
-      text: "حتماً! کارشناسان ما همه‌روزه از ۹ صبح تا ۶ عصر پاسخ‌گو هستند:\n📞 021-91006669\n📱 0912-222-9979\n📱 0912-302-2064\nمی‌خواید مستقیم تماس بگیرید؟",
-      action: "contact",
-    };
-  if (/(هزینه|قیمت|کارمزد|نرخ‌نامه|چقدر)/.test(t))
-    return { text: "کارمزدهای ما کاملاً شفاف و پیش از شروع کار در قالب پیش‌فاکتور رسمی اعلام میشه؛ استعلام تعرفه + مشاوره اول هم رایگانه. 💡 اگه نوع کالا و گمرک مقصد رو بگید، برآورد دقیق می‌دم. برای صدور پیش‌فاکتور رسمی، تماس با کارشناس رو پیشنهاد می‌کنم.", action: "contact" };
-  if (/(دلار|درهم|ارز|تتر|یورو|طلا|سکه|نرخ امروز)/.test(t))
-    return { text: "📊 نرخ‌های لحظه‌ای ارز، طلا و سکه رو می‌تونید در بخش «نرخ ارز و طلا» همین صفحه ببینید — مستقیم از بازار به‌روز میشه و هر ۵ دقیقه تازه‌سازی میشه. برای تحلیل و پیشنهاد زمان خرید، در خدمتم!" };
-  if (/(ثبت سفارش|سامانه|EPL|epl)/.test(t))
-    return { text: "ثبت سفارش در سامانه جامع تجارت ظرف ۲۴ تا ۷۲ ساعت انجام میشه. ✅ کافیه پیش‌فاکتور (پروفرما) و کارت بازرگانی‌تون رو داشته باشید؛ بقیه مراحل شامل تخصیص ارز با ماست. می‌خواید کارشناس ثبت سفارش با شما تماس بگیره؟", action: "contact" };
-  if (/(ترخیص|گمرک|شهید رجایی|امام)/.test(t))
-    return { text: "ما از بیش از ۴۸ گمرک سراسری ترخیص انجام میدیم؛ از جمله شهید رجایی (۳ تا ۵ روزه) و فرودگاه امام (۲۴ تا ۷۲ ساعته). 🚢 نوع کالا و گمرک مقصدتون چیه تا زمان و هزینه دقیق رو اعلام کنم؟" };
-  if (/(تعرفه|hs|کد کالا|حقوق ورودی)/i.test(t))
-    return { text: "حتماً! نام دقیق کالا یا عکس کاتالوگ رو بفرستید تا کد HS و حقوق ورودی رو با دقت ۹۷٪ تشخیص بدم. 🔍 این خدمت کاملاً رایگانه." };
-  if (/(آدرس|دفتر|کجاست|لوکیشن)/.test(t))
-    return { text: "📍 دفتر تهران: نیاوران، خیابان جماران، پلاک ۱۲، ساختمان تریدچاره\n🌍 دفتر دبی: بیزینس‌بی، برج پرایم تاور، طبقه ۲۱\nساعت کاری: شنبه تا پنجشنبه ۹ تا ۱۸" };
-  if (/(ساعت|کاری|تعطیل)/.test(t))
-    return { text: "ساعت کاری دفتر: شنبه تا پنجشنبه ۹ صبح تا ۶ عصر. اما من (چاره‌بات) ۲۴ ساعته آنلاینم! 🤖" };
-  if (/(ممنون|مرسی|تشکر|خداحافظ)/.test(t))
-    return { text: "خواهش می‌کنم! 🙏 هر سؤال دیگه‌ای داشتید در خدمتم. تجارت پرسودی داشته باشید! 🚢" };
-  return { text: "سؤال خوبیه! 🤔 برای پاسخ دقیق‌تر، لطفاً کمی جزئیات بگید (مثلاً نوع کالا یا خدمت موردنظرتون). یا اگه عجله دارید، مستقیم با کارشناس ما صحبت کنید:", action: "contact" };
-}
+/* ================= AI chat widget (live API + offline brain) ================= */
 
 function ChatWidget() {
   const { chatOpen, setChatOpen, openContact } = useUI();
-  const [msgs, setMsgs] = useState<Msg[]>([]);
+  const chat = useChat();
+  const { messages, typing, send, mode } = chat;
   const [input, setInput] = useState("");
-  const [typing, setTyping] = useState(false);
   const [seen, setSeen] = useState(false);
   const bodyRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (chatOpen) {
-      setSeen(true);
-      setMsgs((m) =>
-        m.length
-          ? m
-          : [{ from: "bot", text: "سلام! 👋 به تریدچاره خوش اومدید. من چاره‌بات هستم؛ درباره ترخیص، ثبت سفارش، نرخ ارز و تعرفه ازم بپرسید." }]
-      );
-    }
+    if (chatOpen) setSeen(true);
   }, [chatOpen]);
 
   useEffect(() => {
     bodyRef.current?.scrollTo({ top: bodyRef.current.scrollHeight, behavior: "smooth" });
-  }, [msgs, typing, chatOpen]);
+  }, [messages, typing, chatOpen]);
 
-  const send = (text: string) => {
-    const q = text.trim();
-    if (!q || typing) return;
-    setMsgs((m) => [...m, { from: "user", text: q }]);
+  const submit = (text: string) => {
+    if (!text.trim()) return;
+    send(text);
     setInput("");
-    setTyping(true);
-    setTimeout(() => {
-      const r = botReply(q);
-      setMsgs((m) => [...m, { from: "bot", text: r.text, action: r.action }]);
-      setTyping(false);
-    }, 1100);
   };
 
   return (
@@ -188,12 +140,15 @@ function ChatWidget() {
             ۱
           </span>
         )}
-        <span className="relative grid h-10 w-10 place-items-center rounded-full bg-white/20 backdrop-blur">
-          <I name={chatOpen ? "down" : "headset"} className="h-5.5 w-5.5" />
+        <span className="relative">
+          <AiOrb size={42} active={typing && chatOpen} />
           <span className="absolute right-0.5 bottom-0.5 h-3 w-3 rounded-full bg-green-400 ring-2 ring-brand-600" />
         </span>
         <span className="relative text-start leading-tight">
-          <span className="block text-[14px] font-black">پشتیبانی آنلاین</span>
+          <span className="flex items-center gap-2 text-[14px] font-black">
+            پشتیبانی آنلاین
+            <AiWaves className="eq-light" />
+          </span>
           <span className="block text-[11px] font-bold text-sky-200">چاره‌بات • پاسخ در چند ثانیه</span>
         </span>
       </button>
@@ -202,34 +157,39 @@ function ChatWidget() {
       {chatOpen && (
         <div className="animate-slide-up fixed right-4 bottom-24 z-50 flex h-[540px] max-h-[calc(100vh-130px)] w-[calc(100vw-2rem)] max-w-[390px] flex-col overflow-hidden rounded-[28px] border border-brand-100 bg-white shadow-soft sm:right-7 sm:bottom-26">
           {/* header */}
-          <div className="relative flex items-center gap-3 bg-gradient-to-l from-brand-800 to-brand-600 px-5 py-4 text-white">
+          <div className="relative flex items-center gap-3 bg-gradient-to-l from-brand-800 to-brand-600 px-4 py-3.5 text-white">
             <div className="bg-grid-white absolute inset-0 opacity-40" />
-            <span className="relative grid h-12 w-12 place-items-center rounded-2xl bg-white/15 backdrop-blur">
-              <I name="bot" className="h-7 w-7" />
-              <span className="absolute -right-1 -bottom-1 h-3.5 w-3.5 animate-live rounded-full bg-green-400 ring-2 ring-brand-700" />
+            <AiOrb size={48} className="relative shrink-0" active={typing} />
+            <span className="relative min-w-0 leading-tight">
+              <span className="flex items-center gap-2 text-[15px] font-black">
+                چاره‌بات 🤖
+                {typing && <AiWaves className="eq-light" />}
+              </span>
+              <span className="block truncate text-[11.5px] font-bold text-sky-200">
+                {mode === "live" ? "متصل به هوش مصنوعی" : mode === "offline" ? "حالت هوشمند آفلاین" : "هوش مصنوعی تریدچاره"}
+              </span>
             </span>
-            <span className="relative leading-tight">
-              <span className="block text-[15px] font-black">چاره‌بات 🤖</span>
-              <span className="block text-[12px] font-bold text-green-300">آنلاین — هوش مصنوعی تریدچاره</span>
+            <span className={`relative rounded-full px-2.5 py-1 text-[10.5px] font-black ${mode === "offline" ? "bg-amber-400 text-amber-950" : "bg-green-400 text-green-950"}`}>
+              {mode === "offline" ? "آفلاین" : "زنده"}
             </span>
-            <button onClick={() => setChatOpen(false)} aria-label="بستن چت" className="relative mr-auto grid h-9 w-9 place-items-center rounded-full bg-white/15 transition hover:bg-white/25">
+            <button onClick={() => setChatOpen(false)} aria-label="بستن چت" className="relative grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/15 transition hover:bg-white/25">
               <I name="x" className="h-4.5 w-4.5" />
             </button>
           </div>
 
           {/* messages */}
           <div ref={bodyRef} className="chat-scroll flex-1 space-y-3 overflow-y-auto bg-gradient-to-b from-brand-50/70 to-white px-4 py-4">
-            {msgs.map((m, i) =>
-              m.from === "user" ? (
+            {messages.map((m, i) =>
+              m.role === "user" ? (
                 <div key={i} className="flex justify-start">
                   <p className="max-w-[85%] rounded-2xl rounded-tr-md bg-gradient-to-l from-brand-600 to-brand-500 px-4 py-2.5 text-[13.5px] leading-7 font-bold text-white shadow-md">
-                    {m.text}
+                    {m.content}
                   </p>
                 </div>
               ) : (
                 <div key={i} className="flex flex-col items-end gap-1.5">
                   <p className="max-w-[90%] rounded-2xl rounded-tl-md border border-brand-100 bg-white px-4 py-2.5 text-[13px] leading-7 font-medium whitespace-pre-line text-slate-700 shadow-sm">
-                    {m.text}
+                    {m.content}
                   </p>
                   {m.action === "contact" && (
                     <button
@@ -246,9 +206,7 @@ function ChatWidget() {
             {typing && (
               <div className="flex justify-end">
                 <span className="flex items-center gap-1.5 rounded-2xl rounded-tl-md border border-brand-100 bg-white px-4 py-3 shadow-sm">
-                  {[0, 1, 2].map((d) => (
-                    <span key={d} className="typing-dot h-2 w-2 rounded-full bg-brand-500" style={{ animationDelay: `${d * 180}ms` }} />
-                  ))}
+                  <AiWaves />
                 </span>
               </div>
             )}
@@ -256,10 +214,10 @@ function ChatWidget() {
 
           {/* quick replies */}
           <div className="flex gap-2 overflow-x-auto border-t border-brand-50 bg-white px-3 py-2.5">
-            {QUICK.map((q) => (
+            {CHAT_SUGGESTIONS.slice(0, 4).map((q) => (
               <button
                 key={q}
-                onClick={() => send(q)}
+                onClick={() => submit(q)}
                 className="shrink-0 rounded-full border border-brand-200 bg-brand-50 px-3.5 py-1.5 text-[12px] font-black whitespace-nowrap text-brand-700 transition hover:bg-brand-100"
               >
                 {q}
@@ -271,7 +229,7 @@ function ChatWidget() {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              send(input);
+              submit(input);
             }}
             className="flex items-center gap-2 border-t border-brand-50 bg-white px-3 py-3"
           >
@@ -285,7 +243,7 @@ function ChatWidget() {
               type="submit"
               aria-label="ارسال"
               className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-brand-600 to-brand-500 text-white shadow-soft transition hover:shadow-glow disabled:opacity-40"
-              disabled={!input.trim()}
+              disabled={!input.trim() || typing}
             >
               <I name="send" className="h-5 w-5 -scale-x-100" />
             </button>

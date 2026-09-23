@@ -1,9 +1,89 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { faToman } from "@/lib/data";
 import { formatUpdateTime, useRates } from "@/lib/useRates";
+import { AiOrb, AiWaves, OrbitRing } from "./AiOrb";
 import { CountUp, I, Reveal, useUI } from "./ui";
+
+/* ---------- typewriter ---------- */
+
+const TYPE_WORDS = [
+  "ترخیص کالا از کلیه گمرکات",
+  "ثبت سفارش و تخصیص ارز",
+  "حمل بین‌المللی درب‌به‌درب",
+  "استعلام هوشمند تعرفه",
+];
+
+function useTypewriter(words: string[]) {
+  const [text, setText] = useState("");
+  useEffect(() => {
+    let wi = 0;
+    let ci = 0;
+    let del = false;
+    let pause = 0;
+    let t: ReturnType<typeof setTimeout>;
+    let alive = true;
+    const step = () => {
+      if (!alive) return;
+      const word = words[wi % words.length];
+      if (pause > 0) {
+        pause -= 1;
+        t = setTimeout(step, 90);
+        return;
+      }
+      if (!del) {
+        ci += 1;
+        setText(word.slice(0, ci));
+        if (ci >= word.length) {
+          del = true;
+          pause = 16;
+        }
+        t = setTimeout(step, 80);
+      } else {
+        ci -= 1;
+        setText(word.slice(0, ci));
+        if (ci <= 0) {
+          del = false;
+          wi += 1;
+        }
+        t = setTimeout(step, 38);
+      }
+    };
+    t = setTimeout(step, 500);
+    return () => {
+      alive = false;
+      clearTimeout(t);
+    };
+  }, [words]);
+  return text;
+}
+
+/* ---------- particles ---------- */
+
+function Particles({ count = 26 }: { count?: number }) {
+  return (
+    <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+      {Array.from({ length: count }).map((_, i) => (
+        <span
+          key={i}
+          className="particle"
+          style={{
+            left: `${(i * 37.7 + 5) % 100}%`,
+            top: `${(i * 53.3 + 3) % 100}%`,
+            width: 3 + (i % 4) * 1.6,
+            height: 3 + (i % 4) * 1.6,
+            animationDelay: `${(i * 0.53) % 4}s`,
+            animationDuration: `${3 + (i % 5)}s`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+/* ---------- ticker ---------- */
 
 function Ticker() {
   const { items, live } = useRates("arz");
@@ -47,7 +127,10 @@ function AiTip({ className = "" }: { className?: string }) {
         <I name="bot" className="h-6 w-6" />
       </span>
       <div className="leading-tight">
-        <p className="text-[12px] font-black text-cyan-200">پیشنهاد چاره‌بات</p>
+        <p className="flex items-center gap-2 text-[12px] font-black text-cyan-200">
+          پیشنهاد چاره‌بات
+          <AiWaves className="eq-light" />
+        </p>
         <p className="mt-0.5 text-[12px] font-bold">
           تعرفه HS: <span dir="ltr" className="tabular-nums">8471.30</span> — حقوق ورودی ۵٪
         </p>
@@ -59,6 +142,7 @@ function AiTip({ className = "" }: { className?: string }) {
 export default function Hero() {
   const { openContact, setChatOpen } = useUI();
   const { items, live, updatedAt } = useRates("arz");
+  const typed = useTypewriter(TYPE_WORDS);
   const dollar = items.find((i) => i.code === "USD") ?? items[0];
 
   return (
@@ -71,17 +155,18 @@ export default function Hero() {
           <div className="animate-drift absolute -top-32 -left-32 h-[480px] w-[480px] rounded-full bg-gradient-to-br from-cyan-200/60 to-brand-300/40 blur-3xl" />
           <div className="animate-drift absolute top-40 -right-40 h-[560px] w-[560px] rounded-full bg-gradient-to-bl from-brand-200/70 to-sky-100/50 blur-3xl [animation-delay:2s]" />
         </div>
+        <Particles />
 
         <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-[1.02fr_1fr] lg:gap-8">
           {/* copy */}
-          <div className="flex flex-col items-center gap-6 text-center lg:items-start lg:text-start">
+          <div className="flex flex-col items-center gap-5 text-center sm:gap-6 lg:items-start lg:text-start">
             <Reveal>
               <span className="inline-flex flex-wrap items-center justify-center gap-2 rounded-full border border-brand-200 bg-white/80 py-1.5 pr-2 pl-4 text-[12px] font-bold text-brand-800 shadow-sm backdrop-blur sm:text-[13px]">
-                <span className="rounded-full bg-gradient-to-l from-brand-600 to-cyan-500 px-3 py-1 text-[11px] font-black text-white sm:text-[12px]">
+                <span className="animate-float-x rounded-full bg-gradient-to-l from-brand-600 to-cyan-500 px-3 py-1 text-[11px] font-black text-white sm:text-[12px]">
                   ۲۰ سال سابقه
                 </span>
                 شرکت بازرگانی و ترخیص کالا با هوش مصنوعی اختصاصی
-                <I name="spark" className="h-4 w-4 text-brand-500" />
+                <I name="spark" className="h-4 w-4 animate-spin-slow text-brand-500" />
               </span>
             </Reveal>
 
@@ -89,8 +174,20 @@ export default function Hero() {
               <h1 className="text-[30px] leading-[1.7] font-black text-balance text-ink-900 sm:text-5xl sm:leading-[1.5] lg:text-[54px] lg:leading-[1.45]">
                 تجارت جهانی،
                 <br />
-                بدون مرز با <span className="text-gradient">تریدچاره</span>
+                بدون مرز با <span className="text-shine-anim">تریدچاره</span>
               </h1>
+            </Reveal>
+
+            {/* typewriter line */}
+            <Reveal delay={120}>
+              <p className="flex min-h-[44px] flex-wrap items-center justify-center gap-2 rounded-2xl border border-brand-100 bg-white/70 px-5 py-2.5 text-[13.5px] font-bold text-slate-500 shadow-sm backdrop-blur sm:text-[15px] lg:justify-start">
+                <I name="bolt" className="h-4.5 w-4.5 shrink-0 text-amber-500" />
+                متخصص در
+                <span className="font-black text-brand-700">
+                  {typed}
+                  <span className="type-caret">|</span>
+                </span>
+              </p>
             </Reveal>
 
             <Reveal delay={160}>
@@ -164,6 +261,19 @@ export default function Hero() {
           {/* visual */}
           <Reveal delay={200} className="relative">
             <div className="relative mx-auto max-w-[560px]">
+              {/* orbit ring (desktop) */}
+              <div className="pointer-events-none absolute inset-0 hidden items-center justify-center lg:flex" aria-hidden="true">
+                <OrbitRing
+                  size={660}
+                  duration={32}
+                  badges={[
+                    { icon: "ship", label: "حمل دریایی" },
+                    { icon: "plane", label: "حمل هوایی" },
+                    { icon: "bot", label: "چاره‌بات" },
+                  ]}
+                />
+              </div>
+
               <div className="ring-conic animate-spin-slow absolute -inset-4 rounded-[36px] opacity-20 blur-2xl" />
               <div className="relative overflow-hidden rounded-[28px] border border-white/60 shadow-soft sm:rounded-[32px]">
                 <Image
@@ -184,6 +294,11 @@ export default function Hero() {
                     در حال تخلیه
                   </span>
                 </div>
+              </div>
+
+              {/* AI orb mini (desktop) */}
+              <div className="absolute -top-10 -left-8 hidden lg:block">
+                <AiOrb size={110} />
               </div>
 
               {/* floating card: dollar (live) */}

@@ -34,12 +34,11 @@ export const ADDRESSES = {
 } as const;
 
 export const NAV_LINKS = [
-  { label: "خانه", href: "/" },
   { label: "خدمات", href: "/services" },
-  { label: "ماشین‌حساب گمرکی", href: "/calculator" },
-  { label: "نرخ ارز و طلا", href: "/#rates" },
   { label: "درباره ما", href: "/#about" },
-  { label: "سوالات متداول", href: "/#faq" },
+  { label: "اپلیکیشن و ابزارها", href: "/tools" },
+  { label: "مقالات", href: "/blog" },
+  { label: "محاسبه حقوق گمرکی", href: "/calculator" },
 ] as const;
 
 export type Rate = {

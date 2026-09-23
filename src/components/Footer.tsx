@@ -80,6 +80,12 @@ export default function Footer() {
                     </a>
                   </li>
                 ))}
+                <li>
+                  <a href="/ai" className="group flex items-center gap-2 rounded-xl px-2 py-2 text-[13.5px] font-black text-brand-700 transition hover:bg-brand-50">
+                    <I name="bot" className="h-4 w-4" />
+                    چاره‌بات — هوش مصنوعی
+                  </a>
+                </li>
               </ul>
             </div>
 
