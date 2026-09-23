@@ -212,7 +212,7 @@ export function CtaBanner() {
           <div className="bg-grid-white absolute inset-0 opacity-60" />
           <div className="animate-floaty absolute top-8 right-10 hidden h-20 w-20 rounded-3xl border border-white/30 bg-white/10 backdrop-blur lg:block" />
           <div className="animate-floaty-sm absolute bottom-10 left-12 hidden h-14 w-14 rounded-2xl border border-white/30 bg-white/10 backdrop-blur lg:block [animation-delay:1.5s]" />
-          <div className="animate-drift absolute -top-24 right-1/3 h-72 w-72 rounded-full bg-cyan-300/40 blur-3xl" />
+          <div className="animate-drift absolute -top-24 right-1/3 h-72 w-72 rounded-full bg-amber-300/40 blur-3xl" />
           <div className="animate-drift absolute -bottom-28 left-1/4 h-72 w-72 rounded-full bg-brand-950/50 blur-3xl [animation-delay:2s]" />
 
           <div className="relative mx-auto flex max-w-2xl flex-col items-center gap-5">
@@ -223,7 +223,7 @@ export function CtaBanner() {
             <h2 className="text-3xl leading-[1.6] font-black text-balance text-white sm:text-4xl lg:text-[40px]">
               همین امروز، تجارت بعدی‌تان را با اطمینان شروع کنید
             </h2>
-            <p className="max-w-xl text-[14.5px] leading-8 text-sky-100/90">
+            <p className="max-w-xl text-[14.5px] leading-8 text-stone-100/90">
               یک تماس کافی است تا کارشناسان ما مسیر بهینه واردات، هزینه دقیق و زمان‌بندی ترخیص کالای شما را اعلام کنند.
             </p>
             <div className="mt-2 flex w-full flex-col justify-center gap-3 sm:w-auto sm:flex-row">

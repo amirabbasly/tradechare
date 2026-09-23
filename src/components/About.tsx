@@ -49,7 +49,7 @@ export default function About() {
           {/* image */}
           <Reveal className="relative order-2 lg:order-1">
             <div className="relative mx-auto max-w-[560px]">
-              <div className="absolute -inset-3 rounded-[36px] bg-gradient-to-br from-brand-200/60 to-cyan-200/40 blur-xl" />
+              <div className="absolute -inset-3 rounded-[36px] bg-gradient-to-br from-brand-200/60 to-amber-200/40 blur-xl" />
               <div className="relative overflow-hidden rounded-[32px] border border-white/60 shadow-soft">
                 <Image
                   src="/images/about-office.png"
@@ -137,7 +137,7 @@ export default function About() {
             <div className="mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 lg:grid lg:grid-cols-5 lg:overflow-visible lg:pb-0">
               {TIMELINE.map((t, i) => (
                 <div key={t.year} className="relative flex min-w-[220px] snap-start flex-col items-center gap-2 rounded-[26px] border border-brand-100 bg-white p-6 text-center shadow-sm lg:min-w-0">
-                  <span className="rounded-full bg-gradient-to-l from-brand-600 to-cyan-500 px-4 py-1.5 text-[15px] font-black text-white shadow-soft">
+                  <span className="rounded-full bg-gradient-to-l from-brand-600 to-amber-500 px-4 py-1.5 text-[15px] font-black text-white shadow-soft">
                     {t.year}
                   </span>
                   <h4 className="mt-1 text-[15px] font-black text-ink-900">{t.title}</h4>

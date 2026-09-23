@@ -88,12 +88,12 @@ function ContactModal() {
         </div>
 
         <div className="relative mt-4 grid gap-2.5 rounded-3xl bg-brand-950 p-5 text-white">
-          <p className="flex items-center gap-2 text-[13px] font-black text-cyan-300">
+          <p className="flex items-center gap-2 text-[13px] font-black text-amber-300">
             <I name="clock" className="h-4 w-4" />
             {ADDRESSES.hours}
           </p>
-          <p className="flex items-start gap-2 text-[12.5px] leading-7 font-bold text-sky-100">
-            <I name="pin" className="mt-1 h-4 w-4 shrink-0 text-cyan-300" />
+          <p className="flex items-start gap-2 text-[12.5px] leading-7 font-bold text-stone-100">
+            <I name="pin" className="mt-1 h-4 w-4 shrink-0 text-amber-300" />
             {ADDRESSES.tehran.text}
           </p>
         </div>
@@ -149,7 +149,7 @@ function ChatWidget() {
             پشتیبانی آنلاین
             <AiWaves className="eq-light" />
           </span>
-          <span className="block text-[11px] font-bold text-sky-200">چاره‌بات • پاسخ در چند ثانیه</span>
+          <span className="block text-[11px] font-bold text-stone-200">چاره‌بات • پاسخ در چند ثانیه</span>
         </span>
       </button>
 
@@ -165,7 +165,7 @@ function ChatWidget() {
                 چاره‌بات 🤖
                 {typing && <AiWaves className="eq-light" />}
               </span>
-              <span className="block truncate text-[11.5px] font-bold text-sky-200">
+              <span className="block truncate text-[11.5px] font-bold text-stone-200">
                 {mode === "live" ? "متصل به هوش مصنوعی" : mode === "offline" ? "حالت هوشمند آفلاین" : "هوش مصنوعی تریدچاره"}
               </span>
             </span>

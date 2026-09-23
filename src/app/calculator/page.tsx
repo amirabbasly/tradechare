@@ -151,11 +151,11 @@ function FxConverter() {
       </div>
 
       <div className="mt-auto rounded-3xl bg-gradient-to-l from-brand-800 to-brand-600 p-5 text-white shadow-soft">
-        <p className="text-[12.5px] font-bold text-sky-200">نتیجه تبدیل</p>
+        <p className="text-[12.5px] font-bold text-stone-200">نتیجه تبدیل</p>
         <p className="mt-1 text-[24px] leading-10 font-black break-words tabular-nums">
           {result > 0 ? `${result.toLocaleString("fa-IR", { maximumFractionDigits: result < 100 ? 2 : 0 })} ${nameOf(to)}` : "—"}
         </p>
-        <p className="mt-1 text-[11.5px] font-bold text-sky-200/80">
+        <p className="mt-1 text-[11.5px] font-bold text-stone-200/80">
           هر {nameOf(from)} ={" "}
           {fromRate > 0 && toRate > 0
             ? `${(fromRate / toRate).toLocaleString("fa-IR", { maximumFractionDigits: 4 })} ${nameOf(to)}`
@@ -194,8 +194,8 @@ function DutyCalculator() {
 
   const rows = [
     { label: "حقوق گمرکی (۴٪ ارزش CIF)", value: calc.gomroki, color: "from-brand-600 to-brand-400" },
-    { label: `سود بازرگانی (${(calc.maakhaz - 4 > 0 ? calc.maakhaz - 4 : 0).toLocaleString("fa-IR")}٪)`, value: calc.sood, color: "from-cyan-500 to-cyan-300" },
-    { label: "مالیات ارزش افزوده (۱۰٪)", value: calc.vat, color: "from-indigo-500 to-indigo-300" },
+    { label: `سود بازرگانی (${(calc.maakhaz - 4 > 0 ? calc.maakhaz - 4 : 0).toLocaleString("fa-IR")}٪)`, value: calc.sood, color: "from-amber-500 to-amber-300" },
+    { label: "مالیات ارزش افزوده (۱۰٪)", value: calc.vat, color: "from-emerald-500 to-emerald-300" },
     { label: "عوارض هلال‌احمر (۱٪ حقوق ورودی)", value: calc.helal, color: "from-rose-500 to-rose-300" },
     { label: "سایر هزینه‌ها (انبارداری، THC و…)", value: calc.otherT, color: "from-slate-500 to-slate-300" },
   ];
@@ -216,9 +216,9 @@ function DutyCalculator() {
         <NumInput label="سایر هزینه‌های ترخیص" value={other} setValue={setOther} suffix="تومان" hint="انبارداری، THC، استاندارد و…" />
       </div>
 
-      <div className="rounded-2xl bg-brand-950 p-4 text-[12.5px] leading-7 font-bold text-sky-100">
+      <div className="rounded-2xl bg-brand-950 p-4 text-[12.5px] leading-7 font-bold text-stone-100">
         💡 ارزش CIF شما: <span className="font-black text-white">{calc.cifT > 0 ? faToman(Math.round(calc.cifT)) : "—"}</span>
-        <span className="text-sky-200/70"> (محاسبه با نرخ ETS، نه نرخ آزاد)</span>
+        <span className="text-stone-200/70"> (محاسبه با نرخ ETS، نه نرخ آزاد)</span>
       </div>
 
       <div className="flex flex-col gap-3">
@@ -240,9 +240,9 @@ function DutyCalculator() {
 
       <div className="mt-auto flex flex-col gap-3 rounded-3xl bg-gradient-to-l from-brand-800 to-brand-600 p-5 text-white shadow-soft sm:flex-row sm:items-center">
         <div className="flex-1">
-          <p className="text-[12.5px] font-bold text-sky-200">جمع قابل پرداخت به گمرک (تقریبی)</p>
+          <p className="text-[12.5px] font-bold text-stone-200">جمع قابل پرداخت به گمرک (تقریبی)</p>
           <p className="mt-1 text-[26px] font-black tabular-nums">{calc.total > 0 ? faToman(Math.round(calc.total)) : "—"}</p>
-          <p className="mt-0.5 text-[11.5px] font-bold text-sky-200/80">
+          <p className="mt-0.5 text-[11.5px] font-bold text-stone-200/80">
             نرخ مؤثر: {calc.eff.toLocaleString("fa-IR", { maximumFractionDigits: 1 })}٪ ارزش کالا
           </p>
         </div>
@@ -276,7 +276,7 @@ export default function CalculatorPage() {
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-b from-brand-50 via-white to-white" />
           <div className="bg-grid absolute inset-0 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_35%,black,transparent)]" />
-          <div className="animate-drift absolute -top-24 left-1/4 h-96 w-96 rounded-full bg-cyan-200/50 blur-3xl" />
+          <div className="animate-drift absolute -top-24 left-1/4 h-96 w-96 rounded-full bg-amber-200/50 blur-3xl" />
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6">

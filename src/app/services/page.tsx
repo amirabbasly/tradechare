@@ -56,6 +56,13 @@ const DETAILS: Record<string, string[]> = {
   ],
 };
 
+const GUIDES = [
+  { slug: "shahid-rajaee-clearance-guide", title: "راهنمای ترخیص از گمرک شهید رجایی", desc: "از اظهارنامه تا پروانه؛ ترفندهای کاهش خواب کالا", cover: "/images/blog-clearance.png" },
+  { slug: "order-registration-samane", title: "ثبت سفارش در سامانه جامع تجارت", desc: "آموزش قدم‌به‌قدم بدون حتی یک برگشت پرونده", cover: "/images/blog-portal.png" },
+  { slug: "car-clearance", title: "ترخیص خودرو از گمرک", desc: "شرایط، مدارک و عوارض خودروهای وارداتی", cover: "/images/blog-car.png" },
+  { slug: "cargo-insurance", title: "بیمه باربری و بازرسی کالا", desc: "محافظت از سرمایه با بیمه و بازرسی مبدا", cover: "/images/blog-shipping.png" },
+];
+
 export default function ServicesPage() {
   const { openContact, setChatOpen } = useUI();
 
@@ -178,7 +185,7 @@ export default function ServicesPage() {
       {/* AI block */}
       <section className="px-4 pb-4 sm:px-6">
         <Reveal className="mx-auto max-w-7xl">
-          <div className="relative grid items-center gap-8 overflow-hidden rounded-[36px] bg-gradient-to-l from-brand-950 via-[#0d2557] to-brand-900 p-8 shadow-soft sm:p-12 lg:grid-cols-2">
+          <div className="relative grid items-center gap-8 overflow-hidden rounded-[36px] bg-gradient-to-l from-brand-950 via-[#0d3a24] to-brand-900 p-8 shadow-soft sm:p-12 lg:grid-cols-2">
             <div className="bg-grid-white absolute inset-0 opacity-50" />
             <div className="animate-drift absolute -top-20 right-10 h-72 w-72 rounded-full bg-brand-500/30 blur-[100px]" />
             <div className="relative order-2 overflow-hidden rounded-[28px] border border-white/15 shadow-glow lg:order-1">
@@ -195,20 +202,20 @@ export default function ServicesPage() {
               </span>
             </div>
             <div className="relative order-1 flex flex-col items-start gap-4 lg:order-2">
-              <span className="rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-[13px] font-black text-cyan-200">
+              <span className="rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-[13px] font-black text-amber-200">
                 چاره‌بات — دستیار هوشمند شما
               </span>
               <h2 className="text-2xl leading-snug font-black text-white sm:text-3xl sm:leading-[1.7]">
                 هر ۸ خدمت، با قدرت <span className="text-gradient-light">هوش مصنوعی</span>
               </h2>
-              <p className="text-[14px] leading-8 text-sky-100/80">
+              <p className="text-[14px] leading-8 text-stone-100/80">
                 چاره‌بات در تمام مراحل — از تشخیص تعرفه و محاسبه حقوق ورودی تا
                 پیش‌بینی زمان ترخیص و تحلیل نرخ ارز — کنار شماست و ۲۴ ساعته
                 پاسخ‌گوست.
               </p>
               <button
                 onClick={() => setChatOpen(true)}
-                className="btn-shine mt-1 flex items-center gap-2 rounded-2xl bg-gradient-to-l from-cyan-400 to-brand-500 px-8 py-3.5 text-[15px] font-black text-white shadow-glow transition hover:brightness-110"
+                className="btn-shine mt-1 flex items-center gap-2 rounded-2xl bg-gradient-to-l from-amber-400 to-brand-500 px-8 py-3.5 text-[15px] font-black text-white shadow-glow transition hover:brightness-110"
               >
                 <I name="chat" className="h-5 w-5" />
                 شروع گفت‌وگو با چاره‌بات
@@ -237,6 +244,34 @@ export default function ServicesPage() {
                     <span className="mt-1 block text-[12px] leading-6 font-bold text-slate-500">{s.desc}</span>
                   </span>
                 </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* related guides */}
+      <section className="bg-gradient-to-b from-white via-brand-50/60 to-white py-14">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <SectionHead
+            eyebrow="راهنماهای مرتبط"
+            title={<>قبل از شروع، این راهنماها را <span className="text-gradient">بخوانید</span></>}
+          />
+          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {GUIDES.map((g, i) => (
+              <Reveal key={g.slug} delay={i * 70}>
+                <a
+                  href={`/blog/${g.slug}`}
+                  className="group flex h-full flex-col overflow-hidden rounded-[26px] border border-brand-100 bg-white shadow-card transition hover:-translate-y-2 hover:shadow-soft"
+                >
+                  <div className="relative h-36 shrink-0 overflow-hidden">
+                    <Image src={g.cover} alt={g.title} fill className="object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+                  </div>
+                  <div className="flex flex-1 flex-col gap-1.5 p-5">
+                    <h3 className="text-[14.5px] leading-7 font-black text-ink-900 transition group-hover:text-brand-700">{g.title}</h3>
+                    <p className="line-clamp-2 text-[12.5px] leading-7 text-slate-500">{g.desc}</p>
+                  </div>
+                </a>
               </Reveal>
             ))}
           </div>

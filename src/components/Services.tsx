@@ -74,7 +74,7 @@ export function ServicesGrid() {
               <h3 className="max-w-xl text-2xl leading-snug font-black text-balance text-white sm:text-[34px] sm:leading-[1.7]">
                 از جبل‌علی تا شهید رجایی؛ کالای شما در سریع‌ترین مسیر ممکن
               </h3>
-              <p className="max-w-lg text-[14px] leading-8 text-sky-100/90">
+              <p className="max-w-lg text-[14px] leading-8 text-stone-100/90">
                 شبکه کارگزاران رسمی تریدچاره در بنادر، فرودگاه‌ها و مرزهای زمینی، پرونده شما را بدون معطلی به سرانجام می‌رساند.
               </p>
               <button
@@ -117,7 +117,7 @@ export function Process() {
                     <span className="absolute inset-0 rounded-[24px] bg-gradient-to-br from-brand-500 to-brand-800 shadow-soft transition-transform duration-300 group-hover:rotate-6 group-hover:scale-105" />
                     <span className="absolute inset-0 rounded-[24px] ring-1 ring-white/40 ring-inset" />
                     <span className="relative text-[26px] font-black text-white">{(i + 1).toLocaleString("fa-IR")}</span>
-                    <span className="absolute -bottom-1 -left-1 grid h-7 w-7 place-items-center rounded-full bg-cyan-400 text-white ring-4 ring-white">
+                    <span className="absolute -bottom-1 -left-1 grid h-7 w-7 place-items-center rounded-full bg-amber-400 text-white ring-4 ring-white">
                       <I name="check" className="h-3.5 w-3.5" strokeWidth={3} />
                     </span>
                   </span>
@@ -202,7 +202,7 @@ export function Coverage() {
                   </span>
                   <div className="leading-tight">
                     <p className={`text-[14px] font-black ${c.hot ? "text-white" : "text-ink-900"}`}>{c.name}</p>
-                    <p className={`mt-1 text-[12px] font-bold ${c.hot ? "text-sky-100" : "text-slate-400"}`}>{c.time}</p>
+                    <p className={`mt-1 text-[12px] font-bold ${c.hot ? "text-stone-100" : "text-slate-400"}`}>{c.time}</p>
                   </div>
                   {c.hot && (
                     <span className="mr-auto rounded-full bg-white/25 px-2.5 py-1 text-[10px] font-black text-white">

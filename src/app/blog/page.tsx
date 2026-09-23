@@ -4,8 +4,9 @@ import { CtaBanner } from "@/components/Closing";
 import { I, Reveal, SectionHead } from "@/components/ui";
 
 export const metadata = {
-  title: "مقالات بازرگانی | تریدچاره",
-  description: "آموزش‌های تخصصی ترخیص کالا، ثبت سفارش، تعرفه گمرکی و بازار ارز از کارشناسان تریدچاره.",
+  title: "مقالات آموزشی بازرگانی، گمرک و صادرات",
+  description: "کتابخانه تخصصی تریدچاره: آموزش ترخیص کالا، ثبت سفارش، تعرفه گمرکی، صادرات، تخصیص ارز و تحلیل بازار ارز از کارشناسان با ۲۰ سال تجربه.",
+  alternates: { canonical: "/blog" },
 };
 
 export default function BlogPage() {
@@ -26,6 +27,13 @@ export default function BlogPage() {
             title={<>مقالات آموزشی <span className="text-gradient">تریدچاره</span></>}
             desc="۲۰ سال تجربه عملی در ترخیص، ثبت سفارش و تجارت را به زبان ساده با شما به اشتراک می‌گذاریم."
           />
+
+          <div className="mt-4 flex justify-center">
+            <span className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white px-5 py-2 text-[13px] font-black text-brand-700 shadow-sm">
+              <I name="doc" className="h-4 w-4" />
+              {ARTICLES.length.toLocaleString("fa-IR")} مقاله تخصصی و کاربردی
+            </span>
+          </div>
 
           {/* featured */}
           <Reveal delay={100} className="mt-12">

@@ -197,14 +197,14 @@ function CandleChart({ item, tf }: { item: NormItem; tf: TFKey }) {
           })}
 
           {/* last price line */}
-          <line x1={0} x2={W} y1={y(last.c)} y2={y(last.c)} stroke="#22d3ee" strokeOpacity="0.7" strokeDasharray="5 4" strokeWidth={1.2} vectorEffect="non-scaling-stroke" />
+          <line x1={0} x2={W} y1={y(last.c)} y2={y(last.c)} stroke="#fbbf24" strokeOpacity="0.7" strokeDasharray="5 4" strokeWidth={1.2} vectorEffect="non-scaling-stroke" />
 
           {/* crosshair */}
           {hover !== null && hc && (
             <g>
               <line x1={(hover + 0.5) * step} x2={(hover + 0.5) * step} y1={0} y2={H - 40} stroke="#fff" strokeOpacity="0.35" strokeWidth={1} vectorEffect="non-scaling-stroke" />
               <line x1={0} x2={W} y1={y(hc.c)} y2={y(hc.c)} stroke="#fff" strokeOpacity="0.2" strokeWidth={1} vectorEffect="non-scaling-stroke" />
-              <circle cx={(hover + 0.5) * step} cy={y(hc.c)} r={4} fill={ink} stroke="#0a1c44" strokeWidth={2} />
+              <circle cx={(hover + 0.5) * step} cy={y(hc.c)} r={4} fill={ink} stroke="#05170f" strokeWidth={2} />
             </g>
           )}
         </svg>
@@ -213,7 +213,7 @@ function CandleChart({ item, tf }: { item: NormItem; tf: TFKey }) {
         {ticks.map((t, i) => (
           <span
             key={i}
-            className="absolute right-1 rounded-md bg-white/5 px-1.5 py-0.5 text-[10px] font-black text-sky-200/70 tabular-nums backdrop-blur"
+            className="absolute right-1 rounded-md bg-white/5 px-1.5 py-0.5 text-[10px] font-black text-stone-200/70 tabular-nums backdrop-blur"
             style={{ top: `${(y(t) / H) * 100}%`, transform: "translateY(-50%)" }}
           >
             {Math.round(t).toLocaleString("fa-IR")}
@@ -222,7 +222,7 @@ function CandleChart({ item, tf }: { item: NormItem; tf: TFKey }) {
 
         {/* last price tag */}
         <span
-          className="absolute right-1 rounded-md bg-cyan-400 px-1.5 py-0.5 text-[10px] font-black text-brand-950 tabular-nums"
+          className="absolute right-1 rounded-md bg-amber-400 px-1.5 py-0.5 text-[10px] font-black text-brand-950 tabular-nums"
           style={{ top: `${(y(last.c) / H) * 100}%`, transform: "translateY(-50%)" }}
         >
           {last.c.toLocaleString("fa-IR", { maximumFractionDigits: 0 })}
@@ -240,13 +240,13 @@ function CandleChart({ item, tf }: { item: NormItem; tf: TFKey }) {
             }}
           >
             <div className="grid grid-cols-2 gap-x-3 gap-y-1 font-bold tabular-nums">
-              <span className="text-sky-200/60">باز شدن</span>
+              <span className="text-stone-200/60">باز شدن</span>
               <span className="text-left text-white">{Math.round(hc.o).toLocaleString("fa-IR")}</span>
-              <span className="text-sky-200/60">بالاترین</span>
+              <span className="text-stone-200/60">بالاترین</span>
               <span className="text-left text-green-300">{Math.round(hc.h).toLocaleString("fa-IR")}</span>
-              <span className="text-sky-200/60">پایین‌ترین</span>
+              <span className="text-stone-200/60">پایین‌ترین</span>
               <span className="text-left text-red-300">{Math.round(hc.l).toLocaleString("fa-IR")}</span>
-              <span className="text-sky-200/60">بسته شدن</span>
+              <span className="text-stone-200/60">بسته شدن</span>
               <span className="text-left font-black text-white">{Math.round(hc.c).toLocaleString("fa-IR")}</span>
             </div>
           </div>
@@ -254,7 +254,7 @@ function CandleChart({ item, tf }: { item: NormItem; tf: TFKey }) {
       </div>
 
       {/* time axis */}
-      <div dir="ltr" className="mt-1 flex items-center justify-between px-1 text-[10.5px] font-bold text-sky-200/50 tabular-nums">
+      <div dir="ltr" className="mt-1 flex items-center justify-between px-1 text-[10.5px] font-bold text-stone-200/50 tabular-nums">
         {times.map((t, i) => (
           <span key={i}>{t}</span>
         ))}
@@ -277,7 +277,7 @@ function Tape({ items }: { items: NormItem[] }) {
             <span key={`${r.code}-${i}`} dir="rtl" className="flex items-center gap-2 text-[12.5px] font-black whitespace-nowrap">
               <span>{r.flag}</span>
               <span className="text-white">{r.name}</span>
-              <span className="text-sky-200/80 tabular-nums">{r.toman.toLocaleString("fa-IR")}</span>
+              <span className="text-stone-200/80 tabular-nums">{r.toman.toLocaleString("fa-IR")}</span>
               <span className={`tabular-nums ${up ? "text-green-400" : "text-red-400"}`} dir="ltr">
                 {up ? "▲" : "▼"} {Math.abs(chg).toLocaleString("fa-IR")}%
               </span>
@@ -311,14 +311,14 @@ function WatchRow({
     <button
       onClick={onSelect}
       className={`flex w-full items-center gap-2.5 rounded-2xl border p-2.5 text-start transition ${
-        selected ? "border-cyan-300/60 bg-cyan-400/10 shadow-glow" : "border-transparent hover:bg-white/5"
+        selected ? "border-amber-300/60 bg-amber-400/10 shadow-glow" : "border-transparent hover:bg-white/5"
       }`}
     >
       <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white/10 text-xl">{item.flag}</span>
       <span className="min-w-0 flex-1 leading-tight">
         <span className="block truncate text-[13px] font-black text-white">{item.name}</span>
-        <span className="mt-0.5 block text-[12px] font-black text-sky-200/80 tabular-nums">
-          {item.toman.toLocaleString("fa-IR")} <span className="text-[10px] font-bold text-sky-200/40">تومان</span>
+        <span className="mt-0.5 block text-[12px] font-black text-stone-200/80 tabular-nums">
+          {item.toman.toLocaleString("fa-IR")} <span className="text-[10px] font-bold text-stone-200/40">تومان</span>
         </span>
       </span>
       <span className="hidden shrink-0 xl:block">
@@ -389,7 +389,7 @@ export function Rates() {
                   setSelCode(null);
                 }}
                 className={`flex flex-1 items-center justify-center gap-2 rounded-2xl px-6 py-2.5 text-[14px] font-black transition sm:flex-none ${
-                  tab === "arz" ? "bg-gradient-to-l from-cyan-400 to-brand-500 text-white shadow-glow" : "text-sky-200/70 hover:bg-white/10"
+                  tab === "arz" ? "bg-gradient-to-l from-amber-400 to-brand-500 text-white shadow-glow" : "text-stone-200/70 hover:bg-white/10"
                 }`}
               >
                 💱 تابلوی ارز
@@ -403,7 +403,7 @@ export function Rates() {
                   setSelCode(null);
                 }}
                 className={`flex flex-1 items-center justify-center gap-2 rounded-2xl px-6 py-2.5 text-[14px] font-black transition sm:flex-none ${
-                  tab === "tala" ? "bg-gradient-to-l from-amber-400 to-orange-500 text-white shadow-glow" : "text-sky-200/70 hover:bg-white/10"
+                  tab === "tala" ? "bg-gradient-to-l from-amber-400 to-orange-500 text-white shadow-glow" : "text-stone-200/70 hover:bg-white/10"
                 }`}
               >
                 ✨ تابلوی طلا و سکه
@@ -439,7 +439,7 @@ export function Rates() {
                   <span className="grid h-12 w-12 place-items-center rounded-2xl bg-white/10 text-2xl">{selected?.flag}</span>
                   <span className="leading-tight">
                     <span className="block text-[15px] font-black text-white">{selected?.name}</span>
-                    <span className="mt-0.5 block text-[11px] font-bold text-sky-200/60" dir="ltr">
+                    <span className="mt-0.5 block text-[11px] font-bold text-stone-200/60" dir="ltr">
                       {selected?.code}/IRR • {tab === "arz" ? "FOREX" : "GOLD"}
                     </span>
                   </span>
@@ -449,7 +449,7 @@ export function Rates() {
                     <p className="text-[22px] font-black text-white tabular-nums sm:text-[26px]">
                       {selected?.toman.toLocaleString("fa-IR")}
                     </p>
-                    <p className="text-[11px] font-bold text-sky-200/60">تومان • قیمت لحظه‌ای</p>
+                    <p className="text-[11px] font-bold text-stone-200/60">تومان • قیمت لحظه‌ای</p>
                   </div>
                   <span className={`flex items-center gap-1 rounded-2xl px-3 py-2 text-[13px] font-black tabular-nums ${up ? "bg-green-400/15 text-green-300" : "bg-red-400/15 text-red-300"}`}>
                     <I name={up ? "trendUp" : "trendDown"} className="h-4 w-4" />
@@ -466,8 +466,8 @@ export function Rates() {
                   { l: "بالاترین روز", v: dayHigh ? Math.round(dayHigh).toLocaleString("fa-IR") : "—", c: "text-white" },
                   { l: "پایین‌ترین روز", v: dayLow ? Math.round(dayLow).toLocaleString("fa-IR") : "—", c: "text-white" },
                 ].map((s) => (
-                  <div key={s.l} className="bg-[#0a1836]/80 px-4 py-3">
-                    <p className="text-[11px] font-bold text-sky-200/50">{s.l}</p>
+                  <div key={s.l} className="bg-[#0a2318]/80 px-4 py-3">
+                    <p className="text-[11px] font-bold text-stone-200/50">{s.l}</p>
                     <p className={`mt-0.5 text-[15px] font-black tabular-nums ${s.c}`}>{s.v}</p>
                   </div>
                 ))}
@@ -480,13 +480,13 @@ export function Rates() {
                     key={k}
                     onClick={() => setTf(k)}
                     className={`shrink-0 rounded-xl px-4 py-2 text-[12.5px] font-black transition ${
-                      tf === k ? "bg-cyan-400 text-brand-950 shadow-glow" : "bg-white/5 text-sky-200/70 hover:bg-white/10"
+                      tf === k ? "bg-amber-400 text-brand-950 shadow-glow" : "bg-white/5 text-stone-200/70 hover:bg-white/10"
                     }`}
                   >
                     {TF[k].label}
                   </button>
                 ))}
-                <span className="mr-auto hidden items-center gap-1.5 text-[11.5px] font-bold text-sky-200/50 sm:flex">
+                <span className="mr-auto hidden items-center gap-1.5 text-[11.5px] font-bold text-stone-200/50 sm:flex">
                   <I name="chart" className="h-4 w-4" />
                   نمودار کندل‌استیک + حجم معاملات
                 </span>
@@ -506,7 +506,7 @@ export function Rates() {
                   <I name="star" className="h-4 w-4 text-amber-300" />
                   دیده‌بان بازار
                 </p>
-                <p className="text-[11px] font-bold text-sky-200/50">برای نمودار کلیک کنید</p>
+                <p className="text-[11px] font-bold text-stone-200/50">برای نمودار کلیک کنید</p>
               </div>
               <div className="chat-scroll max-h-[548px] overflow-y-auto p-2.5">
                 {active.items.map((r) => (
@@ -562,7 +562,7 @@ export function Rates() {
             <div className="flex h-full flex-col gap-4 rounded-[26px] border border-white/10 bg-white/[0.04] p-5 backdrop-blur-xl">
               <div>
                 <h3 className="flex items-center gap-2 text-[14px] font-black text-white">
-                  <I name="chart" className="h-5 w-5 text-cyan-300" />
+                  <I name="chart" className="h-5 w-5 text-amber-300" />
                   عمق بازار {selected?.name}
                 </h3>
                 <div className="mt-3 flex h-3.5 overflow-hidden rounded-full bg-white/10" dir="ltr">
@@ -576,7 +576,7 @@ export function Rates() {
               </div>
               <a
                 href="/calculator"
-                className="mt-auto flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-l from-cyan-400 to-brand-500 px-4 py-3 text-[13.5px] font-black text-white shadow-glow transition hover:brightness-110"
+                className="mt-auto flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-l from-amber-400 to-brand-500 px-4 py-3 text-[13.5px] font-black text-white shadow-glow transition hover:brightness-110"
               >
                 <I name="calc" className="h-4.5 w-4.5" />
                 مبدل ارز و ماشین‌حساب گمرکی

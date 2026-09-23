@@ -381,7 +381,7 @@ export function SectionHead({
       <span
         className={`inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-[13px] font-bold ${
           dark
-            ? "border-white/20 bg-white/10 text-sky-200"
+            ? "border-white/20 bg-white/10 text-stone-200"
             : "border-brand-200 bg-brand-50 text-brand-700"
         }`}
       >
@@ -396,7 +396,7 @@ export function SectionHead({
         {title}
       </h2>
       {desc && (
-        <p className={`text-[15px] leading-8 sm:text-base ${dark ? "text-sky-100/80" : "text-slate-500"}`}>
+        <p className={`text-[15px] leading-8 sm:text-base ${dark ? "text-stone-100/80" : "text-slate-500"}`}>
           {desc}
         </p>
       )}
@@ -417,7 +417,7 @@ export function Logo({ light = false }: { light?: boolean }) {
         <span className={`text-[22px] font-black tracking-tight ${light ? "text-white" : "text-ink-900"}`}>
           ترید<span className="text-gradient">چاره</span>
         </span>
-        <span className={`text-[10px] font-bold tracking-[0.28em] ${light ? "text-sky-200" : "text-brand-600"}`}>
+        <span className={`text-[10px] font-bold tracking-[0.28em] ${light ? "text-stone-200" : "text-brand-600"}`}>
           TRADECHARE
         </span>
       </span>

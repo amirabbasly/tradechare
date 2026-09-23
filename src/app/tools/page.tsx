@@ -24,10 +24,10 @@ function PhoneMockup() {
         <div className="absolute top-3 right-1/2 z-10 h-6 w-28 translate-x-1/2 rounded-full bg-ink-900" />
         <div className="overflow-hidden rounded-[38px] bg-gradient-to-b from-brand-50 to-white">
           <div className="bg-gradient-to-l from-brand-700 to-brand-500 px-5 pt-12 pb-5 text-white">
-            <p className="text-[12px] font-bold text-sky-200">سلام، بازرگان 👋</p>
+            <p className="text-[12px] font-bold text-stone-200">سلام، بازرگان 👋</p>
             <p className="mt-0.5 text-[16px] font-black">تریدچاره</p>
             <div className="mt-3 rounded-2xl bg-white/15 p-3 backdrop-blur">
-              <p className="text-[11px] font-bold text-sky-200">دلار آزاد</p>
+              <p className="text-[11px] font-bold text-stone-200">دلار آزاد</p>
               <p className="text-[20px] font-black tabular-nums">
                 {(top[0]?.toman ?? 104200).toLocaleString("fa-IR")}
               </p>

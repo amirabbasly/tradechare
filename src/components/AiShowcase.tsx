@@ -64,7 +64,7 @@ export function ChatPanel({
             چاره‌بات
             <AiWaves className="eq-light" />
           </span>
-          <span className="mt-0.5 block text-[11.5px] font-bold text-sky-200">
+          <span className="mt-0.5 block text-[11.5px] font-bold text-stone-200">
             {mode === "live" ? "متصل به هوش مصنوعی" : mode === "offline" ? "حالت هوشمند آفلاین" : "آنلاین — پاسخ در چند ثانیه"}
           </span>
         </span>
@@ -148,10 +148,10 @@ export function AiSection() {
 
   return (
     <section id="ai" className="relative scroll-mt-20 overflow-hidden py-20 lg:py-28">
-      <div className="absolute inset-0 bg-gradient-to-b from-brand-950 via-[#0d2557] to-brand-950" />
+      <div className="absolute inset-0 bg-gradient-to-b from-brand-950 via-[#0d3a24] to-brand-950" />
       <div className="bg-grid-white absolute inset-0 opacity-70 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_45%,black,transparent)]" />
       <div className="animate-drift absolute top-10 right-10 h-96 w-96 rounded-full bg-brand-500/30 blur-[120px]" />
-      <div className="animate-drift absolute bottom-10 left-10 h-96 w-96 rounded-full bg-cyan-400/20 blur-[120px] [animation-delay:3s]" />
+      <div className="animate-drift absolute bottom-10 left-10 h-96 w-96 rounded-full bg-amber-400/20 blur-[120px] [animation-delay:3s]" />
 
       {/* floating particles */}
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
@@ -178,7 +178,7 @@ export function AiSection() {
             <Reveal className="flex items-center gap-5">
               <AiOrb size={120} active={chat.typing} />
               <div>
-                <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-[12.5px] font-black text-cyan-200">
+                <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-[12.5px] font-black text-amber-200">
                   <span className="h-1.5 w-1.5 animate-live rounded-full bg-green-400" />
                   هوش مصنوعی اختصاصی بازرگانی
                 </span>
@@ -191,7 +191,7 @@ export function AiSection() {
             </Reveal>
 
             <Reveal delay={100}>
-              <p className="mt-4 max-w-xl text-[14.5px] leading-8 text-sky-100/80">
+              <p className="mt-4 max-w-xl text-[14.5px] leading-8 text-stone-100/80">
                 اولین دستیار هوش مصنوعی فارسی‌زبان حوزه گمرک و تجارت؛ آموزش‌دیده
                 روی ۲۰ سال پرونده واقعی ترخیص، بخشنامه‌ها و تعرفه‌های گمرکی.
                 همین حالا سؤالتان را بپرسید — <span className="font-black text-white">پاسخ زنده می‌گیرید.</span>
@@ -201,13 +201,13 @@ export function AiSection() {
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
               {FEATS.map((f, i) => (
                 <Reveal key={f.t} delay={i * 80}>
-                  <div className="group flex h-full items-start gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur transition hover:-translate-y-1 hover:border-cyan-300/40 hover:bg-white/10">
-                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-cyan-400 to-brand-600 text-white shadow-glow transition-transform group-hover:scale-110 group-hover:rotate-6">
+                  <div className="group flex h-full items-start gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur transition hover:-translate-y-1 hover:border-amber-300/40 hover:bg-white/10">
+                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-amber-400 to-brand-600 text-white shadow-glow transition-transform group-hover:scale-110 group-hover:rotate-6">
                       <I name={f.icon} className="h-5 w-5" />
                     </span>
                     <span>
                       <span className="block text-[13.5px] font-black text-white">{f.t}</span>
-                      <span className="mt-0.5 block text-[12px] leading-6 font-medium text-sky-100/70">{f.d}</span>
+                      <span className="mt-0.5 block text-[12px] leading-6 font-medium text-stone-100/70">{f.d}</span>
                     </span>
                   </div>
                 </Reveal>
@@ -218,7 +218,7 @@ export function AiSection() {
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                 <a
                   href="/ai"
-                  className="btn-shine flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-l from-cyan-400 to-brand-500 px-7 py-3.5 text-[15px] font-black text-white shadow-glow transition hover:brightness-110"
+                  className="btn-shine flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-l from-amber-400 to-brand-500 px-7 py-3.5 text-[15px] font-black text-white shadow-glow transition hover:brightness-110"
                 >
                   <I name="bot" className="h-5 w-5" />
                   ورود به صفحه چاره‌بات

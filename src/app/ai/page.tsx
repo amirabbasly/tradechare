@@ -35,10 +35,10 @@ export default function AiPage() {
   return (
     <main className="overflow-hidden">
       {/* hero */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-brand-950 via-[#0d2557] to-brand-950 pt-[150px] pb-14 sm:pt-[170px]">
+      <section className="relative overflow-hidden bg-gradient-to-b from-brand-950 via-[#0d3a24] to-brand-950 pt-[150px] pb-14 sm:pt-[170px]">
         <div className="bg-grid-white absolute inset-0 opacity-70 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_40%,black,transparent)]" />
         <div className="animate-drift absolute top-10 right-1/4 h-96 w-96 rounded-full bg-brand-500/30 blur-[120px]" />
-        <div className="animate-drift absolute bottom-0 left-1/4 h-80 w-80 rounded-full bg-cyan-400/20 blur-[120px] [animation-delay:2.5s]" />
+        <div className="animate-drift absolute bottom-0 left-1/4 h-80 w-80 rounded-full bg-amber-400/20 blur-[120px] [animation-delay:2.5s]" />
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
           {Array.from({ length: 22 }).map((_, i) => (
             <span
@@ -61,7 +61,7 @@ export default function AiPage() {
             <AiOrb size={170} active={chat.typing} />
           </Reveal>
           <Reveal delay={80}>
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-2 text-[13px] font-black text-cyan-200 backdrop-blur">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-2 text-[13px] font-black text-amber-200 backdrop-blur">
               <AiWaves className="eq-light" />
               هوش مصنوعی اختصاصی بازرگانی
             </span>
@@ -72,7 +72,7 @@ export default function AiPage() {
             </h1>
           </Reveal>
           <Reveal delay={200}>
-            <p className="max-w-2xl text-[14.5px] leading-8 text-sky-100/80 sm:text-[16px]">
+            <p className="max-w-2xl text-[14.5px] leading-8 text-stone-100/80 sm:text-[16px]">
               اولین دستیار هوش مصنوعی فارسی‌زبان حوزه گمرک و تجارت؛ آموزش‌دیده روی
               ۲۰ سال پرونده واقعی ترخیص، بخشنامه‌ها و تعرفه‌های گمرکی. سؤالتان را
               بپرسید — در چند ثانیه پاسخ می‌گیرید.

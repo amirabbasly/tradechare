@@ -123,11 +123,11 @@ function Ticker() {
 function AiTip({ className = "" }: { className?: string }) {
   return (
     <div className={`flex items-center gap-3 rounded-3xl border border-white/40 bg-gradient-to-l from-brand-950/95 to-brand-800/95 p-3 pr-4 pl-5 text-white shadow-soft backdrop-blur ${className}`}>
-      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-cyan-400 to-brand-500 shadow-glow">
+      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-amber-400 to-brand-500 shadow-glow">
         <I name="bot" className="h-6 w-6" />
       </span>
       <div className="leading-tight">
-        <p className="flex items-center gap-2 text-[12px] font-black text-cyan-200">
+        <p className="flex items-center gap-2 text-[12px] font-black text-amber-200">
           پیشنهاد چاره‌بات
           <AiWaves className="eq-light" />
         </p>
@@ -152,8 +152,8 @@ export default function Hero() {
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-b from-brand-50 via-white to-white" />
           <div className="bg-grid absolute inset-0 [mask-image:radial-gradient(ellipse_75%_65%_at_50%_35%,black,transparent)]" />
-          <div className="animate-drift absolute -top-32 -left-32 h-[480px] w-[480px] rounded-full bg-gradient-to-br from-cyan-200/60 to-brand-300/40 blur-3xl" />
-          <div className="animate-drift absolute top-40 -right-40 h-[560px] w-[560px] rounded-full bg-gradient-to-bl from-brand-200/70 to-sky-100/50 blur-3xl [animation-delay:2s]" />
+          <div className="animate-drift absolute -top-32 -left-32 h-[480px] w-[480px] rounded-full bg-gradient-to-br from-amber-200/60 to-brand-300/40 blur-3xl" />
+          <div className="animate-drift absolute top-40 -right-40 h-[560px] w-[560px] rounded-full bg-gradient-to-bl from-brand-200/70 to-stone-100/50 blur-3xl [animation-delay:2s]" />
         </div>
         <Particles />
 
@@ -162,7 +162,7 @@ export default function Hero() {
           <div className="flex flex-col items-center gap-5 text-center sm:gap-6 lg:items-start lg:text-start">
             <Reveal>
               <span className="inline-flex flex-wrap items-center justify-center gap-2 rounded-full border border-brand-200 bg-white/80 py-1.5 pr-2 pl-4 text-[12px] font-bold text-brand-800 shadow-sm backdrop-blur sm:text-[13px]">
-                <span className="animate-float-x rounded-full bg-gradient-to-l from-brand-600 to-cyan-500 px-3 py-1 text-[11px] font-black text-white sm:text-[12px]">
+                <span className="animate-float-x rounded-full bg-gradient-to-l from-brand-600 to-amber-500 px-3 py-1 text-[11px] font-black text-white sm:text-[12px]">
                   ۲۰ سال سابقه
                 </span>
                 شرکت بازرگانی و ترخیص کالا با هوش مصنوعی اختصاصی
@@ -224,7 +224,7 @@ export default function Hero() {
                       <span
                         key={i}
                         className={`grid h-10 w-10 place-items-center rounded-full text-[12px] font-black text-white ring-[3px] ring-white ${
-                          ["bg-gradient-to-br from-brand-500 to-brand-700", "bg-gradient-to-br from-cyan-500 to-brand-600", "bg-gradient-to-br from-indigo-500 to-brand-700", "bg-gradient-to-br from-sky-400 to-cyan-600"][i]
+                          ["bg-gradient-to-br from-brand-500 to-brand-700", "bg-gradient-to-br from-amber-500 to-brand-600", "bg-gradient-to-br from-emerald-500 to-brand-700", "bg-gradient-to-br from-stone-400 to-amber-600"][i]
                         }`}
                       >
                         {t}
@@ -325,7 +325,7 @@ export default function Hero() {
                   <span className="text-[11px] font-black text-brand-600">۷۸٪</span>
                 </div>
                 <div className="mt-2.5 h-2 overflow-hidden rounded-full bg-brand-100">
-                  <div className="animate-bar h-full w-[78%] rounded-full bg-gradient-to-l from-brand-600 to-cyan-400" />
+                  <div className="animate-bar h-full w-[78%] rounded-full bg-gradient-to-l from-brand-600 to-amber-400" />
                 </div>
                 <p className="mt-2 flex items-center gap-1.5 text-[11px] font-bold text-slate-500">
                   <I name="checks" className="h-3.5 w-3.5 text-green-500" />
